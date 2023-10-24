@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql
+    container_name: "mysql-sartools"
+    restart: unless-stopped
+    ports:
+      - "6633:3306"
+    networks:
+      - mysql
+    volumes:
+      - .docker/data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: sartools
+      MYSQL_ROOT_PASSWORD: sartools2023
+      MYSQL_USER: sartools
+      MYSQL_PASSWORD: sartools2023
+    command: --default-authentication-plugin=mysql_native_password --skip-host-cache
+networks:
+  mysql:
+    driver: bridge

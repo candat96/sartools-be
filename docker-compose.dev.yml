@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  backend:
+    container_name: sartools-container
+    image: candat/sartools-be
+    ports:
+      - "3535:3535"
+    env_file:
+      - .env
+    volumes:
+      - type: volume
+        source: sartools-be-upload
+        target: /public/uploads
+    networks:
+      - sartools
+    restart: unless-stopped
+   
+
+networks:
+  sartools:
+    name: sartools
+    driver: bridge
+
+volumes:
+  sartools-be-upload:
