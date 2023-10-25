@@ -1,4 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { UserStatus } from '../../../database/model/entities';
 
@@ -60,4 +61,21 @@ export class UpdateUserRequest {
   @IsOptional()
   @IsString()
   position: string;
+}
+
+export class GetUserRequest {
+  @ApiPropertyOptional({ required: false })
+  @IsOptional()
+  @IsString()
+  search: string;
+
+  @ApiPropertyOptional({ required: false, default: 1 })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  page: number;
+
+  @ApiPropertyOptional({ required: false, default: 13 })
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
+  size: number;
 }

@@ -12,4 +12,5 @@ export class CreateUserResponse {
   role: Role;
 }
 
+export class GetUserResponse extends CreateUserResponse {}
 export class UpdateUserResponse extends CreateUserResponse {}

@@ -1,7 +1,7 @@
-import { Body, Controller, Param, ParseIntPipe, Post, Put, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateUserRequest, UpdateUserRequest } from './dto/request';
-import { CreateUserResponse, UpdateUserResponse } from './dto/response';
+import { CreateUserRequest, GetUserRequest, UpdateUserRequest } from './dto/request';
+import { CreateUserResponse, GetUserResponse, UpdateUserResponse } from './dto/response';
 import { UserService } from './user.service';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { Roles } from '../../../common/decorator/role.decorator';
@@ -15,6 +15,25 @@ export class UserController {
   constructor(
     private readonly userService: UserService
   ) {}
+
+  @Get()
+  @ApiOperation({
+    summary: 'Get users',
+    description: 'Get users',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async getUsers(@Query() query: GetUserRequest): Promise<ApiResponse<GetUserResponse[]>> {
+    try {
+      return await this.userService.getUsers(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 
   @Post()
   @ApiOperation({

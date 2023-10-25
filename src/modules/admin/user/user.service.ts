@@ -1,10 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { v4 } from 'uuid';
-import { CreateUserRequest, UpdateUserRequest } from './dto/request';
-import { CreateUserResponse, UpdateUserResponse } from './dto/response';
+import { CreateUserRequest, GetUserRequest, UpdateUserRequest } from './dto/request';
+import { CreateUserResponse, GetUserResponse, UpdateUserResponse } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { ErrorCode } from '../../../common/constants/error';
@@ -71,6 +71,34 @@ export class UserService {
       status: HttpStatus.OK,
       data: _.omit(await this.userRepository.findOneBy({ id }), ['salt', 'password']),
       pagination: null,
+      message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+  
+  async getUsers(dto: GetUserRequest): Promise<ApiResponse<GetUserResponse[]>> {
+    const { search, page, size } = dto;
+
+    const users = await this.userRepository.find({
+      where: search ? [
+        { name: ILike(`%${search}%`), role: Role.USER, deletedAt: null },
+        { email: ILike(`%${search}%`), role: Role.USER, deletedAt: null },
+      ] : { role: Role.USER, deletedAt: null },
+      take: size,
+      skip: (page - 1) * size,
+    });
+
+    const total = await this.userRepository.count({ where: { role: Role.USER, deletedAt: null } });
+    const data = users.map((item) => _.omit(item, ['salt', 'password']));
+
+    return {
+      status: HttpStatus.OK,
+      data,
+      pagination: {
+        total,
+        page,
+        size
+      },
       message: null,
       code: ApiCode.SUCCESS,
     };
