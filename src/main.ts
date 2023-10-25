@@ -27,8 +27,8 @@ async function bootstrap() {
     .format('HH:mm:ss DD-MM-YYYY');
 
   const options = new DocumentBuilder()
-    .setTitle('Mobicare')
-    .setDescription('Mobicare Mobile App API Docs')
+    .setTitle('Sartools')
+    .setDescription('Sartools API Docs')
     .setVersion(timingVersion)
     .addBearerAuth()
     .build();
