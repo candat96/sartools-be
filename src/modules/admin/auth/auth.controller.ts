@@ -5,7 +5,7 @@ import { LoginRequest } from './dto/request';
 import { LoginResponse } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 
-@ApiTags('Admin Authentication')
+@ApiTags('Admin - Authentication')
 @Controller('admin/auth')
 export class AuthController {
   constructor(

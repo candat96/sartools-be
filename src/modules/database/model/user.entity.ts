@@ -13,7 +13,7 @@ export enum Role {
 
 @Entity('user')
 export class User extends BaseEntity {
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   name: string;
 
   @Column({ nullable: false, unique: true })
