@@ -28,7 +28,7 @@ const logger = new LoggerService();
     }),
     DatabaseModule,
     AdminModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,14 +8,10 @@ import { User } from '../../database/model/entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      User,
-    ]),
+    TypeOrmModule.forFeature([User]),
     JwtModule.register({ secret: Config.JWT_SECRET }),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService
-  ],
+  providers: [AuthService],
 })
 export class AuthModule {}
