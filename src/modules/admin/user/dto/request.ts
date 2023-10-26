@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { UserStatus } from '../../../database/model/entities';
+import { Position, UserStatus } from '../../../database/model/entities';
 
 export class CreateUserRequest {
   @ApiProperty({ required: true })
@@ -57,10 +57,10 @@ export class UpdateUserRequest {
   @IsEnum(UserStatus)
   status: UserStatus;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, enum: Position })
   @IsOptional()
-  @IsString()
-  position: string;
+  @IsEnum(Position)
+  position: Position;
 }
 
 export class GetUserRequest {
