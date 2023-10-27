@@ -11,10 +11,7 @@ import { ValidationError } from 'class-validator';
 import { IValidationError } from './exception.interface';
 import { FieldValidationException } from './field-validation.exception';
 
-const buildError = (
-  errors: ValidationError[],
-  result: IValidationError[],
-) => {
+const buildError = (errors: ValidationError[], result: IValidationError[]) => {
   errors.forEach((el) => {
     if (el.children) {
       buildError(el.children, result);
@@ -66,8 +63,7 @@ export class CustomValidationPipe extends ValidationPipe {
       this.transformOptions,
     );
 
-    const originalEntity =
-      typeof entity === 'object' ? { ...entity } : entity;
+    const originalEntity = typeof entity === 'object' ? { ...entity } : entity;
     const isCtorNotEqual = entity.constructor !== metatype;
 
     if (isCtorNotEqual && !isPrimitive) {
@@ -99,10 +95,7 @@ export class CustomValidationPipe extends ValidationPipe {
       originalEntity.mimetype
     ) {
       return Object.keys(this.validatorOptions).length > 0
-        ? classTransformer.classToPlain(
-            originalEntity,
-            this.transformOptions,
-          )
+        ? classTransformer.classToPlain(originalEntity, this.transformOptions)
         : value;
     }
 
