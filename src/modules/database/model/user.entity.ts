@@ -12,6 +12,7 @@ export enum Role {
 }
 
 export enum Position {
+  DEFAULT = 'DEFAULT',
   DIRECTION = 'DIRECTION',
   TECHNICAL_DIRECTION = 'TECHNICAL_DIRECTION',
   COMMERCE = 'COMMERCE',
@@ -53,7 +54,7 @@ export class User extends BaseEntity {
   @Column({ nullable: false, default: UserStatus.INACTIVE })
   status: UserStatus;
 
-  @Column({ nullable: true, enum: Position })
+  @Column({ nullable: true, enum: Position, default: Position.DEFAULT })
   position: Position;
 
   @Column({ nullable: false, default: Role.USER })
