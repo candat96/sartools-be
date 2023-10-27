@@ -51,12 +51,17 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   avatar: string;
 
-  @Column({ nullable: false, default: UserStatus.INACTIVE })
+  @Column({ nullable: false, type: 'enum', default: UserStatus.INACTIVE })
   status: UserStatus;
 
-  @Column({ nullable: true, enum: Position, default: Position.DEFAULT })
+  @Column({
+    nullable: true,
+    type: 'enum',
+    enum: Position,
+    default: Position.DEFAULT,
+  })
   position: Position;
 
-  @Column({ nullable: false, default: Role.USER })
+  @Column({ nullable: false, type: 'enum', default: Role.USER })
   role: Role;
 }
