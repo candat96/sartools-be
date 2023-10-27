@@ -5,7 +5,7 @@ services:
     container_name: sartools-container
     image: candat/sartools-be
     ports:
-      - "3535:3535"
+      - "8083:8083"
     env_file:
       - .env
     volumes:
