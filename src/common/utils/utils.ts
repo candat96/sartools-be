@@ -5,7 +5,10 @@ export const hash = async (
   plainPassword: string,
   salt: string,
 ): Promise<string> => {
-  return await bcrypt.hash(plainPassword + salt + Config.JWT_SECRET_KEY, 10);
+  return await bcrypt.hash(
+    plainPassword + salt + Config.JWT_SECRET_KEY,
+    10,
+  );
 };
 
 export const compare = async (

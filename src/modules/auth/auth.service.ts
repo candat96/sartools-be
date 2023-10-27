@@ -18,7 +18,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async login(dto: LoginRequest): Promise<ApiResponse<LoginResponse>> {
@@ -49,7 +49,7 @@ export class AuthService {
     const info = _.omit(user, ['salt', 'password']);
     const token: string = this.jwtService.sign(info, {
       secret: Config.JWT_SECRET_KEY,
-      expiresIn: Config.JWT_EXPIRED_TIME
+      expiresIn: Config.JWT_EXPIRED_TIME,
     });
 
     return {

@@ -11,9 +11,22 @@ export enum Role {
   ADMIN = 'ADMIN',
 }
 
+export enum Position {
+  DIRECTION = 'DIRECTION',
+  TECHNICAL_DIRECTION = 'TECHNICAL_DIRECTION',
+  COMMERCE = 'COMMERCE',
+  MARKETING = 'MARKETING',
+  EXPLOITATION = 'EXPLOITATION',
+  DESIGN_OFFICE = 'DESIGN_OFFICE',
+  MATERIAL = 'MATERIAL',
+  RESEARCH_AND_DEVELOPMENT = 'RESEARCH_AND_DEVELOPMENT',
+  TECHNICAL_ASSISTANCE = 'TECHNICAL_ASSISTANCE',
+  OTHER = 'OTHER',
+}
+
 @Entity('user')
 export class User extends BaseEntity {
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   name: string;
 
   @Column({ nullable: false, unique: true })
@@ -40,8 +53,8 @@ export class User extends BaseEntity {
   @Column({ nullable: false, default: UserStatus.INACTIVE })
   status: UserStatus;
 
-  @Column({ nullable: true })
-  position: string;
+  @Column({ nullable: true, enum: Position })
+  position: Position;
 
   @Column({ nullable: false, default: Role.USER })
   role: Role;
