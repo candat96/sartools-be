@@ -31,10 +31,7 @@ export class AuthService {
       deletedAt: null,
     });
     if (!user) {
-      throw new ApiException(
-        HttpStatus.BAD_REQUEST,
-        ErrorCode.USER_NOT_FOUND,
-      );
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
     }
 
     const { salt, password } = user;

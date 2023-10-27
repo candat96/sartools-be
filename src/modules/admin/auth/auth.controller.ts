@@ -23,9 +23,7 @@ export class AuthController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
-  async login(
-    @Body() body: LoginRequest,
-  ): Promise<ApiResponse<LoginResponse>> {
+  async login(@Body() body: LoginRequest): Promise<ApiResponse<LoginResponse>> {
     try {
       return await this.authService.login(body);
     } catch (err) {

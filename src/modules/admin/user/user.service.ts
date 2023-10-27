@@ -36,10 +36,7 @@ export class UserService {
       deletedAt: null,
     });
     if (existed) {
-      throw new ApiException(
-        HttpStatus.BAD_REQUEST,
-        ErrorCode.USER_EXISTED,
-      );
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_EXISTED);
     }
 
     const salt: string = v4();
@@ -70,10 +67,7 @@ export class UserService {
       deletedAt: null,
     });
     if (!user) {
-      throw new ApiException(
-        HttpStatus.BAD_REQUEST,
-        ErrorCode.USER_NOT_FOUND,
-      );
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
     }
 
     if (dto.startDate && dto.endDate && dto.startDate >= dto.endDate) {
@@ -97,9 +91,7 @@ export class UserService {
     };
   }
 
-  async getUsers(
-    dto: GetUserRequest,
-  ): Promise<ApiResponse<GetUserResponse[]>> {
+  async getUsers(dto: GetUserRequest): Promise<ApiResponse<GetUserResponse[]>> {
     const { search, page, size } = dto;
 
     const users = await this.userRepository.find({
