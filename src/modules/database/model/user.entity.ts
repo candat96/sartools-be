@@ -18,6 +18,7 @@ export enum Position {
   COMMERCE = 'COMMERCE',
   MARKETING = 'MARKETING',
   EXPLOITATION = 'EXPLOITATION',
+  APPLICATION = 'APPLICATION',
   DESIGN_OFFICE = 'DESIGN_OFFICE',
   MATERIAL = 'MATERIAL',
   RESEARCH_AND_DEVELOPMENT = 'RESEARCH_AND_DEVELOPMENT',
@@ -51,7 +52,12 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   avatar: string;
 
-  @Column({ nullable: false, type: 'enum', default: UserStatus.INACTIVE })
+  @Column({
+    nullable: false,
+    type: 'enum',
+    enum: UserStatus,
+    default: UserStatus.INACTIVE,
+  })
   status: UserStatus;
 
   @Column({
@@ -62,6 +68,6 @@ export class User extends BaseEntity {
   })
   position: Position;
 
-  @Column({ nullable: false, type: 'enum', default: Role.USER })
+  @Column({ nullable: false, type: 'enum', enum: Role, default: Role.USER })
   role: Role;
 }
