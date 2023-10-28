@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { LoginRequest } from './dto/request';
-import { LoginResponse } from './dto/response';
+import { LoginRequest, RegisterRequest } from './dto/request';
+import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 
 @ApiTags('Authentication')
@@ -26,6 +26,24 @@ export class AuthController {
   async login(@Body() body: LoginRequest): Promise<ApiResponse<LoginResponse>> {
     try {
       return await this.authService.login(body);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Post('register')
+  @ApiOperation({
+    summary: 'User register',
+    description: 'User register',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async register(
+    @Body() body: RegisterRequest,
+  ): Promise<ApiResponse<RegisterResponse>> {
+    try {
+      return await this.authService.register(body);
     } catch (err) {
       console.log(err);
       throw err;
