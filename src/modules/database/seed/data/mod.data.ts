@@ -10,7 +10,7 @@ export const Mods = [
     vide1: 1000,
   },
   {
-    modulation1: 'T\'1',
+    modulation1: "T'1",
     plein1: 150,
     vide1: 500,
   },
@@ -20,7 +20,7 @@ export const Mods = [
     vide1: 350,
   },
   {
-    modulation1: 'T\'2',
+    modulation1: "T'2",
     plein1: 50,
     vide1: 50,
   },
@@ -30,7 +30,7 @@ export const Mods = [
     vide1: 133,
   },
   {
-    modulation1: 'T\'3',
+    modulation1: "T'3",
     plein1: 2000,
     vide1: 600,
   },

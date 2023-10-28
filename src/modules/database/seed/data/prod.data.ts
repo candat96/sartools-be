@@ -20,17 +20,17 @@ export const Prods = [
     dluo: 12,
   },
   {
-    typo: 'Peintures à l\'eau Blanches < 300 kg',
+    typo: "Peintures à l'eau Blanches < 300 kg",
     colonne1: null,
     dluo: 12,
   },
   {
-    typo: 'Peintures à l\'eau Blanches ≥ 300 kg',
+    typo: "Peintures à l'eau Blanches ≥ 300 kg",
     colonne1: null,
     dluo: 8,
   },
   {
-    typo: 'Peintures à l\'eau blanches sans odeur',
+    typo: "Peintures à l'eau blanches sans odeur",
     colonne1: null,
     dluo: 8,
   },
@@ -45,7 +45,7 @@ export const Prods = [
     dluo: 8,
   },
   {
-    typo: 'Peintures à l\'eau Jaunes',
+    typo: "Peintures à l'eau Jaunes",
     colonne1: null,
     dluo: 8,
   },
@@ -75,7 +75,7 @@ export const Prods = [
     dluo: 12,
   },
   {
-    typo: 'Enduits à l\'eau',
+    typo: "Enduits à l'eau",
     colonne1: null,
     dluo: 6,
   },

@@ -3,7 +3,7 @@ export const Sups = [
     support: 'Peinture Solvantée',
   },
   {
-    support: 'Peinture à L\'eau',
+    support: "Peinture à L'eau",
   },
   {
     support: 'Peinture Réactive',

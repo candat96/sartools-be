@@ -3,7 +3,7 @@ export const Axes = [
     axe: 'Agglomération T1',
   },
   {
-    axe: 'Agglomération T\'1',
+    axe: "Agglomération T'1",
   },
   {
     axe: 'Agglomération T3',

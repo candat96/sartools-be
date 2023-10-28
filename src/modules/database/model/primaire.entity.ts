@@ -6,9 +6,9 @@ export class Primaire extends BaseEntity {
   @Column({ nullable: true })
   primaires: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   density: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   conso: number;
 }

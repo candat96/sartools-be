@@ -12,6 +12,6 @@ export class Convert extends BaseEntity {
   @Column({ nullable: true })
   metre: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   coef: number;
 }

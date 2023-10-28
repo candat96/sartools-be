@@ -6,6 +6,6 @@ export class TypeVoie extends BaseEntity {
   @Column({ nullable: true })
   type: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   u: number;
 }

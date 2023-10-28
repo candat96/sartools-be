@@ -78,7 +78,7 @@ export class AuthService {
         ...dto,
         salt,
         password: encryptedPassword,
-        status: UserStatus.ACTIVE
+        status: UserStatus.ACTIVE,
       }),
     );
 

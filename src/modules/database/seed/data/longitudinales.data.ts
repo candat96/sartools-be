@@ -7,21 +7,21 @@ export const LongitudinalesData = [
     u: '3U',
   },
   {
-    longitudinales: 'Voie d\'accélération',
+    longitudinales: "Voie d'accélération",
     modulo: 'T2',
     plein: 3,
     vide: 3.5,
     u: '5U',
   },
   {
-    longitudinales: 'Voie d\'insertion',
+    longitudinales: "Voie d'insertion",
     modulo: 'T2',
     plein: 3,
     vide: 3.5,
     u: '5U',
   },
   {
-    longitudinales: 'Voie d\'entrecroisement',
+    longitudinales: "Voie d'entrecroisement",
     modulo: 'T2',
     plein: 3,
     vide: 3.5,
@@ -64,7 +64,7 @@ export const LongitudinalesData = [
   },
   {
     longitudinales: 'Approche de certains carrefours',
-    modulo: 'T\'3',
+    modulo: "T'3",
     plein: 20,
     vide: 6,
     u: '3U',

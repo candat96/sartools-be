@@ -9,10 +9,10 @@ export class Transversales extends BaseEntity {
   @Column({ nullable: true })
   modulo: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   plein: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   vide: number;
 
   @Column({ nullable: true })

@@ -14,8 +14,13 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async getUserProfile(userId: number): Promise<ApiResponse<GetUserProfileResponse>> {
-    const user = await this.userRepository.findOneBy({ id: userId, deletedAt: null });
+  async getUserProfile(
+    userId: number,
+  ): Promise<ApiResponse<GetUserProfileResponse>> {
+    const user = await this.userRepository.findOneBy({
+      id: userId,
+      deletedAt: null,
+    });
 
     return {
       status: HttpStatus.OK,
