@@ -10,6 +10,7 @@ import { Config } from './config/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { TelegramBotModule } from './modules/telegram-bot/telegram-bot.module';
 import { UserModule } from './modules/user/user.module';
 
 const logger = new LoggerService();
@@ -31,6 +32,7 @@ const logger = new LoggerService();
     AdminModule,
     AuthModule,
     UserModule,
+    TelegramBotModule
   ],
   controllers: [AppController],
   providers: [AppService],
