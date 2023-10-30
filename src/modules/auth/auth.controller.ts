@@ -25,6 +25,7 @@ export class AuthController {
   @ApiOkResponse()
   async login(@Body() body: LoginRequest): Promise<ApiResponse<LoginResponse>> {
     try {
+      console.log('@@== LOGIN INPUT: ', body);
       return await this.authService.login(body);
     } catch (err) {
       console.log(err);
