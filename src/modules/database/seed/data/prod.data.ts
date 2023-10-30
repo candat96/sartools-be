@@ -1,17 +1,17 @@
 export const Prods = [
   {
-    produit: 'Peinture Solvantée'
+    produit: 'Peinture Solvantée',
   },
   {
-    produit: "Peinture à L'eau"
+    produit: "Peinture à L'eau",
   },
   {
-    produit: 'Peinture Réactive'
+    produit: 'Peinture Réactive',
   },
   {
-    produit: 'Enduit à Froid'
+    produit: 'Enduit à Froid',
   },
   {
-    produit: 'Enduit à Chaud'
-  }
+    produit: 'Enduit à Chaud',
+  },
 ];

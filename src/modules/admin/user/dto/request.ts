@@ -2,24 +2,26 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsDate,
-  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
+  Matches,
 } from 'class-validator';
+import { REGEX } from '../../../../common/constants/regex';
 import { Position, UserStatus } from '../../../database/model/entities';
 
 export class CreateUserRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
-  @IsEmail()
+  @Matches(REGEX.EMAIL)
   email: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
+  @Matches(REGEX.PASSWORD)
   password: string;
 
   @ApiProperty({ required: false })
@@ -46,6 +48,11 @@ export class CreateUserRequest {
   @IsOptional()
   @IsDate()
   endDate: Date;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  province: string;
 }
 
 export class UpdateUserRequest {
@@ -83,6 +90,11 @@ export class UpdateUserRequest {
   @IsOptional()
   @IsEnum(Position)
   position: Position;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  province: string;
 }
 
 export class GetUserRequest {

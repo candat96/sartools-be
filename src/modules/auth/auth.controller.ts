@@ -43,6 +43,7 @@ export class AuthController {
     @Body() body: RegisterRequest,
   ): Promise<ApiResponse<RegisterResponse>> {
     try {
+      console.log('@@== REGISTER INPUT: ', body);
       return await this.authService.register(body);
     } catch (err) {
       console.log(err);
