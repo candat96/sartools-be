@@ -24,6 +24,21 @@ export class CreateUserRequest {
 
   @ApiProperty({ required: false })
   @IsOptional()
+  @IsString()
+  name: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  company: string;
+
+  @ApiProperty({ required: false, enum: Position })
+  @IsOptional()
+  @IsEnum(Position)
+  position: Position;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsDate()
   startDate: Date;
 

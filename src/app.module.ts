@@ -30,7 +30,7 @@ const logger = new LoggerService();
     DatabaseModule,
     AdminModule,
     AuthModule,
-    UserModule
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
