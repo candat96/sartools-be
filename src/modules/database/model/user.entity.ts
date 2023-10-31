@@ -52,8 +52,8 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   avatar: string;
 
-  @Column({ nullable: true, type: 'text' })
-  province: string;
+  @Column({ nullable: true })
+  phone: string;
 
   @Column({
     nullable: false,

@@ -54,5 +54,5 @@ export class RegisterRequest {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
-  province: string;
+  phone: string;
 }

@@ -1,6 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 import { ILike, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import {
@@ -16,6 +17,7 @@ import {
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { ErrorCode } from '../../../common/constants/error';
+import { FRANCE_TIME_ZONE } from '../../../common/constants/timezone';
 import { ApiException } from '../../../common/exception/api-exception';
 import { hash } from '../../../common/utils/utils';
 import { Role, User } from '../../database/model/entities';
@@ -39,11 +41,25 @@ export class UserService {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_EXISTED);
     }
 
+    if (dto.startDate && dto.endDate && dto.startDate >= dto.endDate) {
+      throw new ApiException(
+        HttpStatus.BAD_REQUEST,
+        ErrorCode.INVALID_EFFECTIVE_TIME,
+      );
+    }
+
     const salt: string = v4();
     const encryptedPassword: string = await hash(dto.password, salt);
+    const startDate = moment().tz(FRANCE_TIME_ZONE).toDate();
+    const endDate = moment(startDate)
+      .tz(FRANCE_TIME_ZONE)
+      .add(2, 'days')
+      .toDate();
     const data = await this.userRepository.save(
       this.userRepository.create({
         ...dto,
+        startDate: dto.startDate ? dto.startDate : startDate,
+        endDate: dto.endDate ? dto.endDate : endDate,
         salt,
         password: encryptedPassword,
       }),
