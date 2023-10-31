@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
+import * as moment from 'moment-timezone';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import { LoginRequest, RegisterRequest } from './dto/request';
@@ -9,6 +10,7 @@ import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { ApiCode } from '../../common/constants/api-code';
 import { ErrorCode } from '../../common/constants/error';
+import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
 import { ApiException } from '../../common/exception/api-exception';
 import { compare, hash } from '../../common/utils/utils';
 import { Config } from '../../config/config';
@@ -73,9 +75,16 @@ export class AuthService {
 
     const salt = v4();
     const encryptedPassword: string = await hash(dto.password, salt);
+    const startDate = moment().tz(FRANCE_TIME_ZONE).toDate();
+    const endDate = moment(startDate)
+      .tz(FRANCE_TIME_ZONE)
+      .add(2, 'days')
+      .toDate();
     const data = await this.userRepository.save(
       this.userRepository.create({
         ...dto,
+        startDate,
+        endDate,
         salt,
         password: encryptedPassword,
         status: UserStatus.ACTIVE,

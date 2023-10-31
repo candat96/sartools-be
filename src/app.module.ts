@@ -32,7 +32,7 @@ const logger = new LoggerService();
     AdminModule,
     AuthModule,
     UserModule,
-    TelegramBotModule
+    TelegramBotModule,
   ],
   controllers: [AppController],
   providers: [AppService],

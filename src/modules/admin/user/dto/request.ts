@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
-  IsDate,
+  IsDateString,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -41,18 +41,23 @@ export class CreateUserRequest {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   startDate: Date;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   endDate: Date;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
-  province: string;
+  phone: string;
+
+  @ApiProperty({ required: false, enum: UserStatus })
+  @IsOptional()
+  @IsEnum(UserStatus)
+  status: UserStatus;
 }
 
 export class UpdateUserRequest {
@@ -68,12 +73,12 @@ export class UpdateUserRequest {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   startDate: Date;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   endDate: Date;
 
   @ApiProperty({ required: false })
@@ -94,7 +99,7 @@ export class UpdateUserRequest {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
-  province: string;
+  phone: string;
 }
 
 export class GetUserRequest {

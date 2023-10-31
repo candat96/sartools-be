@@ -1,11 +1,13 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
-import { Repository } from 'typeorm';
+import * as moment from 'moment-timezone';
+import { LessThanOrEqual, Repository } from 'typeorm';
 import { GetUserProfileResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { ApiCode } from '../../common/constants/api-code';
-import { User } from '../database/model/entities';
+import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
+import { User, UserStatus } from '../database/model/entities';
 
 @Injectable()
 export class UserService {
@@ -29,5 +31,23 @@ export class UserService {
       message: null,
       code: ApiCode.SUCCESS,
     };
+  }
+
+  async inactiveUser() {
+    const now = moment().tz(FRANCE_TIME_ZONE).toDate();
+    const users = await this.userRepository.findBy({
+      endDate: LessThanOrEqual(now),
+      status: UserStatus.ACTIVE,
+      deletedAt: null,
+    });
+
+    if (users && users.length) {
+      await this.userRepository.save(
+        users.map((item) => ({
+          ...item,
+          status: UserStatus.INACTIVE,
+        })),
+      );
+    }
   }
 }

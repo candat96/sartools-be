@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as moment from 'moment-timezone';
 import { AppModule } from './app.module';
-import { VIETNAM_TIME_ZONE } from './common/constants/timezone';
+import { FRANCE_TIME_ZONE } from './common/constants/timezone';
 import { CustomValidationPipe } from './common/exception/validation.pipe';
 import { LoggerService } from './common/services/logger.service';
 
@@ -23,7 +23,7 @@ async function bootstrap() {
   });
 
   const timingVersion = moment()
-    .tz(VIETNAM_TIME_ZONE)
+    .tz(FRANCE_TIME_ZONE)
     .format('HH:mm:ss DD-MM-YYYY');
 
   const options = new DocumentBuilder()
