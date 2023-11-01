@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -97,6 +98,27 @@ export class UserController {
   ): Promise<ApiResponse<UpdateUserResponse>> {
     try {
       return await this.userService.updateUser(id, body);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Delete user',
+    description: 'Delete user',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async deleteUser(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ApiResponse<UpdateUserResponse>> {
+    try {
+      return await this.userService.deleteUser(id);
     } catch (err) {
       console.log(err);
       throw err;

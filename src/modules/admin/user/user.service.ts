@@ -146,4 +146,25 @@ export class UserService {
       code: ApiCode.SUCCESS,
     };
   }
+
+  async deleteUser(id: number): Promise<ApiResponse<any>> {
+    const user = await this.userRepository.findOneBy({
+      id,
+      role: Role.USER,
+      deletedAt: null,
+    });
+    if (!user) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
+    }
+
+    await this.userRepository.softDelete(id);
+
+    return {
+      status: HttpStatus.OK,
+      data: null,
+      pagination: null,
+      message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
 }
