@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
-import { ILike, Repository } from 'typeorm';
+import { ILike, In, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import {
   CreateUserRequest,
@@ -147,13 +147,13 @@ export class UserService {
     };
   }
 
-  async deleteUser(id: number): Promise<ApiResponse<any>> {
-    const user = await this.userRepository.findOneBy({
-      id,
+  async deleteUser(id: number[]): Promise<ApiResponse<any>> {
+    const user = await this.userRepository.findBy({
+      id: In(id),
       role: Role.USER,
       deletedAt: null,
     });
-    if (!user) {
+    if (!user || !user.length) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
     }
 

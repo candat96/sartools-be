@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -20,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import {
   CreateUserRequest,
+  DeleteUserRequest,
   GetUserRequest,
   UpdateUserRequest,
 } from './dto/request';
@@ -104,7 +104,7 @@ export class UserController {
     }
   }
 
-  @Delete(':id')
+  @Post('delete')
   @ApiOperation({
     summary: 'Delete user',
     description: 'Delete user',
@@ -115,10 +115,10 @@ export class UserController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
   async deleteUser(
-    @Param('id', ParseIntPipe) id: number,
+    @Body() { id }: DeleteUserRequest,
   ): Promise<ApiResponse<UpdateUserResponse>> {
     try {
-      return await this.userService.deleteUser(id);
+      return await this.userService.deleteUser(id.map((item) => Number(item)));
     } catch (err) {
       console.log(err);
       throw err;
