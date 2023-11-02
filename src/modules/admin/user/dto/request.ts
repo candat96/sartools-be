@@ -4,6 +4,7 @@ import {
   IsDateString,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -117,4 +118,10 @@ export class GetUserRequest {
   @IsOptional()
   @Transform(({ value }) => Number(value))
   size: number;
+}
+
+export class DeleteUserRequest {
+  @ApiProperty({ required: true, type: () => [Number] })
+  @IsNumber({}, { each: true })
+  id: number[];
 }
