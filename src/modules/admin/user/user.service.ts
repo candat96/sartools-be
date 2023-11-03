@@ -125,6 +125,7 @@ export class UserService {
             },
           ]
         : { role: Role.USER, deletedAt: null },
+      order: { createdAt: 'DESC' },
       take: size,
       skip: (page - 1) * size,
     });
