@@ -56,3 +56,16 @@ export class RegisterRequest {
   @IsString()
   phone: string;
 }
+
+export class ChangePasswordRequest {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsString()
+  oldPassword: string;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsString()
+  @Matches(REGEX.PASSWORD)
+  newPassword: string;
+}
