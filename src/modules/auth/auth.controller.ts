@@ -4,12 +4,15 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
+  UseGuards
 } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { LoginRequest, RegisterRequest } from './dto/request';
+import { ChangePasswordRequest, LoginRequest, RegisterRequest } from './dto/request';
 import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
+import { AuthDecorator } from '../../common/decorator/auth.decorator';
+import { AuthGuard } from '../../common/guards/auth.guard';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -44,6 +47,26 @@ export class AuthController {
   ): Promise<ApiResponse<RegisterResponse>> {
     try {
       return await this.authService.register(body);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Post('change-password')
+  @ApiOperation({
+    summary: 'User change password',
+    description: 'User change password',
+  })
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async changePassword(
+    @AuthDecorator() auth: any, @Body() body: ChangePasswordRequest,
+  ): Promise<ApiResponse<any>> {
+    try {
+      return await this.authService.changePassword(auth.id, body);
     } catch (err) {
       console.log(err);
       throw err;

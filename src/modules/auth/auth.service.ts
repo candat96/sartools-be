@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
-import { LoginRequest, RegisterRequest } from './dto/request';
+import { ChangePasswordRequest, LoginRequest, RegisterRequest } from './dto/request';
 import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { ApiCode } from '../../common/constants/api-code';
@@ -96,6 +96,36 @@ export class AuthService {
       data: _.omit(data, ['salt', 'password']),
       pagination: null,
       message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async changePassword(userId: number, dto: ChangePasswordRequest): Promise<ApiResponse<any>> {
+    const user = await this.userRepository.findOneBy({
+      id: userId,
+      role: Role.USER,
+      deletedAt: null,
+    });
+
+    const { salt, password } = user;
+    const isPasswordValid = await compare(dto.oldPassword, salt, password);
+    if (!isPasswordValid) {
+      throw new ApiException(
+        HttpStatus.BAD_REQUEST,
+        ErrorCode.INVALID_PASSWORD,
+      );
+    }
+
+    const newSalt = v4();
+    const encryptedPassword: string = await hash(dto.newPassword, newSalt);
+
+    await this.userRepository.save({ ...user, salt: newSalt, password: encryptedPassword });
+
+    return {
+      status: HttpStatus.OK,
+      data: null,
+      pagination: null,
+      message: 'Success',
       code: ApiCode.SUCCESS,
     };
   }
