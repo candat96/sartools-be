@@ -4,11 +4,20 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { ChangePasswordRequest, LoginRequest, RegisterRequest } from './dto/request';
+import {
+  ChangePasswordRequest,
+  LoginRequest,
+  RegisterRequest,
+} from './dto/request';
 import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { AuthDecorator } from '../../common/decorator/auth.decorator';
@@ -63,7 +72,8 @@ export class AuthController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
   async changePassword(
-    @AuthDecorator() auth: any, @Body() body: ChangePasswordRequest,
+    @AuthDecorator() auth: any,
+    @Body() body: ChangePasswordRequest,
   ): Promise<ApiResponse<any>> {
     try {
       return await this.authService.changePassword(auth.id, body);

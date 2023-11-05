@@ -5,7 +5,11 @@ import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
-import { ChangePasswordRequest, LoginRequest, RegisterRequest } from './dto/request';
+import {
+  ChangePasswordRequest,
+  LoginRequest,
+  RegisterRequest,
+} from './dto/request';
 import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { ApiCode } from '../../common/constants/api-code';
@@ -100,7 +104,10 @@ export class AuthService {
     };
   }
 
-  async changePassword(userId: number, dto: ChangePasswordRequest): Promise<ApiResponse<any>> {
+  async changePassword(
+    userId: number,
+    dto: ChangePasswordRequest,
+  ): Promise<ApiResponse<any>> {
     const user = await this.userRepository.findOneBy({
       id: userId,
       role: Role.USER,
@@ -119,7 +126,11 @@ export class AuthService {
     const newSalt = v4();
     const encryptedPassword: string = await hash(dto.newPassword, newSalt);
 
-    await this.userRepository.save({ ...user, salt: newSalt, password: encryptedPassword });
+    await this.userRepository.save({
+      ...user,
+      salt: newSalt,
+      password: encryptedPassword,
+    });
 
     return {
       status: HttpStatus.OK,
