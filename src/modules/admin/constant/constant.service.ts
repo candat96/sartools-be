@@ -163,10 +163,14 @@ export class ConstantService {
         data = await this.tableauBillesRepository.findBy({ deletedAt: null });
         break;
       case Constant.TABLEAU_BUSES_CARACTERISTIQUE:
-        data = await this.tableauBusesCaracteristiqueRepository.findBy({ deletedAt: null });
+        data = await this.tableauBusesCaracteristiqueRepository.findBy({
+          deletedAt: null,
+        });
         break;
       case Constant.TABLEAU_LISTE_BUSES:
-        data = await this.tableauListeBusesRepository.findBy({ deletedAt: null });
+        data = await this.tableauListeBusesRepository.findBy({
+          deletedAt: null,
+        });
         break;
       case Constant.TABLEAU_MARK:
         data = await this.tableauMarkRepository.findBy({ deletedAt: null });
@@ -241,19 +245,27 @@ export class ConstantService {
         data = input._v15 ? await this._v15Repository.save(input._v15) : null;
         break;
       case Constant._V154:
-        data = input._v154 ? await this._v154Repository.save(input._v154) : null;
+        data = input._v154
+          ? await this._v154Repository.save(input._v154)
+          : null;
         break;
       case Constant.AXE:
         data = input.axe ? await this.axeRepository.save(input.axe) : null;
         break;
       case Constant.COMPATIBILITIEES:
-        data = input.compatibilitees ? await this.compatibiliteesRepository.save(input.compatibilitees) : null;
+        data = input.compatibilitees
+          ? await this.compatibiliteesRepository.save(input.compatibilitees)
+          : null;
         break;
       case Constant.CONVERT:
-        data = input.convert ? await this.convertRepository.save(input.convert) : null;
+        data = input.convert
+          ? await this.convertRepository.save(input.convert)
+          : null;
         break;
       case Constant.LONGITUDINALES:
-        data = input.longitudinales ? await this.longitudinalesRepository.save(input.longitudinales) : null;
+        data = input.longitudinales
+          ? await this.longitudinalesRepository.save(input.longitudinales)
+          : null;
         break;
       case Constant.MOD:
         data = input.mod ? await this.modRepository.save(input.mod) : null;
@@ -262,13 +274,17 @@ export class ConstantService {
         data = input.pSat ? await this.pSatRepository.save(input.pSat) : null;
         break;
       case Constant.PRIMAIRE:
-        data = input.primaire ? await this.primaireRepository.save(input.primaire) : null;
+        data = input.primaire
+          ? await this.primaireRepository.save(input.primaire)
+          : null;
         break;
       case Constant.PROD:
         data = input.prod ? await this.prodRepository.save(input.prod) : null;
         break;
       case Constant.PRODUITS_TYPE:
-        data = input.produitsType ? await this.produitsTypeRepository.save(input.produitsType) : null;
+        data = input.produitsType
+          ? await this.produitsTypeRepository.save(input.produitsType)
+          : null;
         break;
       case Constant.RECO:
         data = input.reco ? await this.recoRepository.save(input.reco) : null;
@@ -277,64 +293,104 @@ export class ConstantService {
         data = input.sup ? await this.supRepository.save(input.sup) : null;
         break;
       case Constant.TABLEAU_ANGLE_2:
-        data = input.tableauAngle2 ? await this.tableauAngle2Repository.save(input.tableauAngle2) : null;
+        data = input.tableauAngle2
+          ? await this.tableauAngle2Repository.save(input.tableauAngle2)
+          : null;
         break;
       case Constant.TABLEAU_BILLES:
-        data = input.tableauBilles ? await this.tableauBillesRepository.save(input.tableauBilles) : null;
+        data = input.tableauBilles
+          ? await this.tableauBillesRepository.save(input.tableauBilles)
+          : null;
         break;
       case Constant.TABLEAU_BUSES_CARACTERISTIQUE:
-        data = input.tableauBusesCaracteristique ? await this.tableauBusesCaracteristiqueRepository.save(input.tableauBusesCaracteristique) : null;
+        data = input.tableauBusesCaracteristique
+          ? await this.tableauBusesCaracteristiqueRepository.save(
+              input.tableauBusesCaracteristique,
+            )
+          : null;
         break;
       case Constant.TABLEAU_LISTE_BUSES:
-        data = input.tableauListeBuses ? await this.tableauListeBusesRepository.save(input.tableauListeBuses) : null;
+        data = input.tableauListeBuses
+          ? await this.tableauListeBusesRepository.save(input.tableauListeBuses)
+          : null;
         break;
       case Constant.TABLEAU_MARK:
-        data = input.tableauMark ? await this.tableauMarkRepository.save(input.tableauMark) : null;
+        data = input.tableauMark
+          ? await this.tableauMarkRepository.save(input.tableauMark)
+          : null;
         break;
       case Constant.TABLEAU_MESH:
-        data = input.tableauMesh ? await this.tableauMeshRepository.save(input.tableauMesh) : null;
+        data = input.tableauMesh
+          ? await this.tableauMeshRepository.save(input.tableauMesh)
+          : null;
         break;
       case Constant.TABLEAU_P:
-        data = input.tableauP ? await this.tableauPRepository.save(input.tableauP) : null;
+        data = input.tableauP
+          ? await this.tableauPRepository.save(input.tableauP)
+          : null;
         break;
       case Constant.TABLEAU_Q:
-        data = input.tableauQ ? await this.tableauQRepository.save(input.tableauQ) : null;
+        data = input.tableauQ
+          ? await this.tableauQRepository.save(input.tableauQ)
+          : null;
         break;
       case Constant.TABLEAU_R:
-        data = input.tableauR ? await this.tableauRRepository.save(input.tableauR) : null;
+        data = input.tableauR
+          ? await this.tableauRRepository.save(input.tableauR)
+          : null;
         break;
       case Constant.TABLEAU_RR:
-        data = input.tableauRR ? await this.tableauRRRepository.save(input.tableauRR) : null;
+        data = input.tableauRR
+          ? await this.tableauRRRepository.save(input.tableauRR)
+          : null;
         break;
       case Constant.TABLEAU_RW:
-        data = input.tableauRW ? await this.tableauRWRepository.save(input.tableauRW) : null;
+        data = input.tableauRW
+          ? await this.tableauRWRepository.save(input.tableauRW)
+          : null;
         break;
       case Constant.TABLEAU_S:
-        data = input.tableauS ? await this.tableauSRepository.save(input.tableauS) : null;
+        data = input.tableauS
+          ? await this.tableauSRepository.save(input.tableauS)
+          : null;
         break;
       case Constant.TABLEAU_SELECT:
-        data = input.tableauSelect ? await this.tableauSelectRepository.save(input.tableauSelect) : null;
+        data = input.tableauSelect
+          ? await this.tableauSelectRepository.save(input.tableauSelect)
+          : null;
         break;
       case Constant.TABLEAU1_2:
-        data = input.tableau12 ? await this.tableau12Repository.save(input.tableau12) : null;
+        data = input.tableau12
+          ? await this.tableau12Repository.save(input.tableau12)
+          : null;
         break;
       case Constant.TABLEAU1_1:
-        data = input.tableau11 ? await this.tableau11Repository.save(input.tableau11) : null;
+        data = input.tableau11
+          ? await this.tableau11Repository.save(input.tableau11)
+          : null;
         break;
       case Constant.TABLEAU1:
-        data = input.tableau1 ? await this.tableau1Repository.save(input.tableau1) : null;
+        data = input.tableau1
+          ? await this.tableau1Repository.save(input.tableau1)
+          : null;
         break;
       case Constant.TEMPORAIRE:
-        data = input.temporaire ? await this.temporaireRepository.save(input.temporaire) : null;
+        data = input.temporaire
+          ? await this.temporaireRepository.save(input.temporaire)
+          : null;
         break;
       case Constant.TOPO:
         data = input.topo ? await this.topoRepository.save(input.topo) : null;
         break;
       case Constant.TRANSVERSALES:
-        data = input.transversales ? await this.transversalesRepository.save(input.transversales) : null;
+        data = input.transversales
+          ? await this.transversalesRepository.save(input.transversales)
+          : null;
         break;
       case Constant.TYPE_VOIE:
-        data = input.typeVoie ? await this.typeVoieRepository.save(input.typeVoie) : null;
+        data = input.typeVoie
+          ? await this.typeVoieRepository.save(input.typeVoie)
+          : null;
         break;
       case Constant.VOIE:
         data = input.voie ? await this.voieRepository.save(input.voie) : null;

@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Constant } from '../../../../common/constants/enum';
 
 export class GetConstantRequest {
@@ -213,7 +221,7 @@ export class TableauAngle2DTO {
   bande: string;
 }
 
-export class TableauBillesDTO{
+export class TableauBillesDTO {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
@@ -290,7 +298,7 @@ export class TableauPDTO {
   passages: number;
 }
 
-export class TableauQDTO{
+export class TableauQDTO {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
@@ -350,7 +358,7 @@ export class TableauSDTO {
   coef: string;
 }
 
-export class TableauSelectDTO{
+export class TableauSelectDTO {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
@@ -364,7 +372,7 @@ export class Tableau12DTO {
   temperature: string;
 }
 
-export class Tableau11DTO{
+export class Tableau11DTO {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
@@ -402,7 +410,7 @@ export class TopoDTO {
   lecture: number;
 }
 
-export class TransversalesDTO{
+export class TransversalesDTO {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
