@@ -1,8 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
+  Put,
   Query,
   UseGuards,
   UsePipes,
@@ -15,7 +19,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ConstantService } from './constant.service';
-import { AddConstantRequest, GetConstantRequest } from './dto/request';
+import {
+  AddConstantRequest,
+  DeleteConstantRequest,
+  GetConstantRequest,
+  UpdateConstantRequest,
+} from './dto/request';
 import { Roles } from '../../../common/decorator/role.decorator';
 import { AuthGuard } from '../../../common/guards/auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
@@ -58,6 +67,50 @@ export class ConstantController {
   async addConstant(@Body() body: AddConstantRequest) {
     try {
       return await this.constantService.addConstant(body);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Put(':id')
+  @ApiOperation({
+    summary: 'Update constant',
+    description: 'Update constant',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async updateConstant(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateConstantRequest,
+  ) {
+    try {
+      return await this.constantService.updateConstant(id, body);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Delete constant',
+    description: 'Delete constant',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async deleteConstant(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() { type }: DeleteConstantRequest,
+  ) {
+    try {
+      return await this.constantService.deleteConstant(id, type);
     } catch (err) {
       console.log(err);
       throw err;

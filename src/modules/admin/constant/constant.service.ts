@@ -1,9 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AddConstantRequest } from './dto/request';
+import { AddConstantRequest, UpdateConstantRequest } from './dto/request';
 import { ApiCode } from '../../../common/constants/api-code';
 import { Constant } from '../../../common/constants/enum';
+import { ErrorCode } from '../../../common/constants/error';
+import { ApiException } from '../../../common/exception/api-exception';
 import {
   Axe,
   Compatibilitees,
@@ -118,110 +120,106 @@ export class ConstantService {
     let data = null;
     switch (type) {
       case Constant._V15:
-        data = await this._v15Repository.findBy({ deletedAt: null });
+        data = await this._v15Repository.find();
         break;
       case Constant._V154:
-        data = await this._v154Repository.findBy({ deletedAt: null });
+        data = await this._v154Repository.find();
         break;
       case Constant.AXE:
-        data = await this.axeRepository.findBy({ deletedAt: null });
+        data = await this.axeRepository.find();
         break;
       case Constant.COMPATIBILITIEES:
-        data = await this.compatibiliteesRepository.findBy({ deletedAt: null });
+        data = await this.compatibiliteesRepository.find();
         break;
       case Constant.CONVERT:
-        data = await this.convertRepository.findBy({ deletedAt: null });
+        data = await this.convertRepository.find();
         break;
       case Constant.LONGITUDINALES:
-        data = await this.longitudinalesRepository.findBy({ deletedAt: null });
+        data = await this.longitudinalesRepository.find();
         break;
       case Constant.MOD:
-        data = await this.modRepository.findBy({ deletedAt: null });
+        data = await this.modRepository.find();
         break;
       case Constant.P_SAT:
-        data = await this.pSatRepository.findBy({ deletedAt: null });
+        data = await this.pSatRepository.find();
         break;
       case Constant.PRIMAIRE:
-        data = await this.primaireRepository.findBy({ deletedAt: null });
+        data = await this.primaireRepository.find();
         break;
       case Constant.PROD:
-        data = await this.prodRepository.findBy({ deletedAt: null });
+        data = await this.prodRepository.find();
         break;
       case Constant.PRODUITS_TYPE:
-        data = await this.produitsTypeRepository.findBy({ deletedAt: null });
+        data = await this.produitsTypeRepository.find();
         break;
       case Constant.RECO:
-        data = await this.recoRepository.findBy({ deletedAt: null });
+        data = await this.recoRepository.find();
         break;
       case Constant.SUP:
-        data = await this.supRepository.findBy({ deletedAt: null });
+        data = await this.supRepository.find();
         break;
       case Constant.TABLEAU_ANGLE_2:
-        data = await this.tableauAngle2Repository.findBy({ deletedAt: null });
+        data = await this.tableauAngle2Repository.find();
         break;
       case Constant.TABLEAU_BILLES:
-        data = await this.tableauBillesRepository.findBy({ deletedAt: null });
+        data = await this.tableauBillesRepository.find();
         break;
       case Constant.TABLEAU_BUSES_CARACTERISTIQUE:
-        data = await this.tableauBusesCaracteristiqueRepository.findBy({
-          deletedAt: null,
-        });
+        data = await this.tableauBusesCaracteristiqueRepository.find();
         break;
       case Constant.TABLEAU_LISTE_BUSES:
-        data = await this.tableauListeBusesRepository.findBy({
-          deletedAt: null,
-        });
+        data = await this.tableauListeBusesRepository.find();
         break;
       case Constant.TABLEAU_MARK:
-        data = await this.tableauMarkRepository.findBy({ deletedAt: null });
+        data = await this.tableauMarkRepository.find();
         break;
       case Constant.TABLEAU_MESH:
-        data = await this.tableauMeshRepository.findBy({ deletedAt: null });
+        data = await this.tableauMeshRepository.find();
         break;
       case Constant.TABLEAU_P:
-        data = await this.tableauPRepository.findBy({ deletedAt: null });
+        data = await this.tableauPRepository.find();
         break;
       case Constant.TABLEAU_Q:
-        data = await this.tableauQRepository.findBy({ deletedAt: null });
+        data = await this.tableauQRepository.find();
         break;
       case Constant.TABLEAU_R:
-        data = await this.tableauRRepository.findBy({ deletedAt: null });
+        data = await this.tableauRRepository.find();
         break;
       case Constant.TABLEAU_RR:
-        data = await this.tableauRRRepository.findBy({ deletedAt: null });
+        data = await this.tableauRRRepository.find();
         break;
       case Constant.TABLEAU_RW:
-        data = await this.tableauRWRepository.findBy({ deletedAt: null });
+        data = await this.tableauRWRepository.find();
         break;
       case Constant.TABLEAU_S:
-        data = await this.tableauSRepository.findBy({ deletedAt: null });
+        data = await this.tableauSRepository.find();
         break;
       case Constant.TABLEAU_SELECT:
-        data = await this.tableauSelectRepository.findBy({ deletedAt: null });
+        data = await this.tableauSelectRepository.find();
         break;
       case Constant.TABLEAU1_2:
-        data = await this.tableau12Repository.findBy({ deletedAt: null });
+        data = await this.tableau12Repository.find();
         break;
       case Constant.TABLEAU1_1:
-        data = await this.tableau11Repository.findBy({ deletedAt: null });
+        data = await this.tableau11Repository.find();
         break;
       case Constant.TABLEAU1:
-        data = await this.tableau1Repository.findBy({ deletedAt: null });
+        data = await this.tableau1Repository.find();
         break;
       case Constant.TEMPORAIRE:
-        data = await this.temporaireRepository.findBy({ deletedAt: null });
+        data = await this.temporaireRepository.find();
         break;
       case Constant.TOPO:
-        data = await this.topoRepository.findBy({ deletedAt: null });
+        data = await this.topoRepository.find();
         break;
       case Constant.TRANSVERSALES:
-        data = await this.transversalesRepository.findBy({ deletedAt: null });
+        data = await this.transversalesRepository.find();
         break;
       case Constant.TYPE_VOIE:
-        data = await this.typeVoieRepository.findBy({ deletedAt: null });
+        data = await this.typeVoieRepository.find();
         break;
       case Constant.VOIE:
-        data = await this.voieRepository.findBy({ deletedAt: null });
+        data = await this.voieRepository.find();
         break;
       default:
         break;
@@ -404,6 +402,331 @@ export class ConstantService {
       data,
       pagination: null,
       message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async updateConstant(id: number, dto: UpdateConstantRequest) {
+    try {
+      const { type, ...input } = dto;
+
+      let data = null;
+      switch (type) {
+        case Constant._V15:
+          data = input._v15
+            ? await this._v15Repository.update(id, input._v15)
+            : null;
+          break;
+        case Constant._V154:
+          data = input._v154
+            ? await this._v154Repository.update(id, input._v154)
+            : null;
+          break;
+        case Constant.AXE:
+          data = input.axe
+            ? await this.axeRepository.update(id, input.axe)
+            : null;
+          break;
+        case Constant.COMPATIBILITIEES:
+          data = input.compatibilitees
+            ? await this.compatibiliteesRepository.update(
+                id,
+                input.compatibilitees,
+              )
+            : null;
+          break;
+        case Constant.CONVERT:
+          data = input.convert
+            ? await this.convertRepository.update(id, input.convert)
+            : null;
+          break;
+        case Constant.LONGITUDINALES:
+          data = input.longitudinales
+            ? await this.longitudinalesRepository.update(
+                id,
+                input.longitudinales,
+              )
+            : null;
+          break;
+        case Constant.MOD:
+          data = input.mod
+            ? await this.modRepository.update(id, input.mod)
+            : null;
+          break;
+        case Constant.P_SAT:
+          data = input.pSat
+            ? await this.pSatRepository.update(id, input.pSat)
+            : null;
+          break;
+        case Constant.PRIMAIRE:
+          data = input.primaire
+            ? await this.primaireRepository.update(id, input.primaire)
+            : null;
+          break;
+        case Constant.PROD:
+          data = input.prod
+            ? await this.prodRepository.update(id, input.prod)
+            : null;
+          break;
+        case Constant.PRODUITS_TYPE:
+          data = input.produitsType
+            ? await this.produitsTypeRepository.update(id, input.produitsType)
+            : null;
+          break;
+        case Constant.RECO:
+          data = input.reco
+            ? await this.recoRepository.update(id, input.reco)
+            : null;
+          break;
+        case Constant.SUP:
+          data = input.sup
+            ? await this.supRepository.update(id, input.sup)
+            : null;
+          break;
+        case Constant.TABLEAU_ANGLE_2:
+          data = input.tableauAngle2
+            ? await this.tableauAngle2Repository.update(id, input.tableauAngle2)
+            : null;
+          break;
+        case Constant.TABLEAU_BILLES:
+          data = input.tableauBilles
+            ? await this.tableauBillesRepository.update(id, input.tableauBilles)
+            : null;
+          break;
+        case Constant.TABLEAU_BUSES_CARACTERISTIQUE:
+          data = input.tableauBusesCaracteristique
+            ? await this.tableauBusesCaracteristiqueRepository.update(
+                id,
+                input.tableauBusesCaracteristique,
+              )
+            : null;
+          break;
+        case Constant.TABLEAU_LISTE_BUSES:
+          data = input.tableauListeBuses
+            ? await this.tableauListeBusesRepository.update(
+                id,
+                input.tableauListeBuses,
+              )
+            : null;
+          break;
+        case Constant.TABLEAU_MARK:
+          data = input.tableauMark
+            ? await this.tableauMarkRepository.update(id, input.tableauMark)
+            : null;
+          break;
+        case Constant.TABLEAU_MESH:
+          data = input.tableauMesh
+            ? await this.tableauMeshRepository.update(id, input.tableauMesh)
+            : null;
+          break;
+        case Constant.TABLEAU_P:
+          data = input.tableauP
+            ? await this.tableauPRepository.update(id, input.tableauP)
+            : null;
+          break;
+        case Constant.TABLEAU_Q:
+          data = input.tableauQ
+            ? await this.tableauQRepository.update(id, input.tableauQ)
+            : null;
+          break;
+        case Constant.TABLEAU_R:
+          data = input.tableauR
+            ? await this.tableauRRepository.update(id, input.tableauR)
+            : null;
+          break;
+        case Constant.TABLEAU_RR:
+          data = input.tableauRR
+            ? await this.tableauRRRepository.update(id, input.tableauRR)
+            : null;
+          break;
+        case Constant.TABLEAU_RW:
+          data = input.tableauRW
+            ? await this.tableauRWRepository.update(id, input.tableauRW)
+            : null;
+          break;
+        case Constant.TABLEAU_S:
+          data = input.tableauS
+            ? await this.tableauSRepository.update(id, input.tableauS)
+            : null;
+          break;
+        case Constant.TABLEAU_SELECT:
+          data = input.tableauSelect
+            ? await this.tableauSelectRepository.update(id, input.tableauSelect)
+            : null;
+          break;
+        case Constant.TABLEAU1_2:
+          data = input.tableau12
+            ? await this.tableau12Repository.update(id, input.tableau12)
+            : null;
+          break;
+        case Constant.TABLEAU1_1:
+          data = input.tableau11
+            ? await this.tableau11Repository.update(id, input.tableau11)
+            : null;
+          break;
+        case Constant.TABLEAU1:
+          data = input.tableau1
+            ? await this.tableau1Repository.update(id, input.tableau1)
+            : null;
+          break;
+        case Constant.TEMPORAIRE:
+          data = input.temporaire
+            ? await this.temporaireRepository.update(id, input.temporaire)
+            : null;
+          break;
+        case Constant.TOPO:
+          data = input.topo
+            ? await this.topoRepository.update(id, input.topo)
+            : null;
+          break;
+        case Constant.TRANSVERSALES:
+          data = input.transversales
+            ? await this.transversalesRepository.update(id, input.transversales)
+            : null;
+          break;
+        case Constant.TYPE_VOIE:
+          data = input.typeVoie
+            ? await this.typeVoieRepository.update(id, input.typeVoie)
+            : null;
+          break;
+        case Constant.VOIE:
+          data = input.voie
+            ? await this.voieRepository.update(id, input.voie)
+            : null;
+          break;
+        default:
+          break;
+      }
+
+      return {
+        status: HttpStatus.OK,
+        data: null,
+        pagination: null,
+        message: data ? 'Success' : 'Failed',
+        code: ApiCode.SUCCESS,
+      };
+    } catch (err) {
+      throw new ApiException(
+        HttpStatus.BAD_REQUEST,
+        ErrorCode.INVALID_UPDATE_CONSTANT_INPUT,
+      );
+    }
+  }
+
+  async deleteConstant(id: number, type: Constant) {
+    let data = null;
+    switch (type) {
+      case Constant._V15:
+        data = await this._v15Repository.delete(id);
+        break;
+      case Constant._V154:
+        data = await this._v154Repository.delete(id);
+        break;
+      case Constant.AXE:
+        data = await this.axeRepository.delete(id);
+        break;
+      case Constant.COMPATIBILITIEES:
+        data = await this.compatibiliteesRepository.delete(id);
+        break;
+      case Constant.CONVERT:
+        data = await this.convertRepository.delete(id);
+        break;
+      case Constant.LONGITUDINALES:
+        data = await this.longitudinalesRepository.delete(id);
+        break;
+      case Constant.MOD:
+        data = await this.modRepository.delete(id);
+        break;
+      case Constant.P_SAT:
+        data = await this.pSatRepository.delete(id);
+        break;
+      case Constant.PRIMAIRE:
+        data = await this.primaireRepository.delete(id);
+        break;
+      case Constant.PROD:
+        data = await this.prodRepository.delete(id);
+        break;
+      case Constant.PRODUITS_TYPE:
+        data = await this.produitsTypeRepository.delete(id);
+        break;
+      case Constant.RECO:
+        data = await this.recoRepository.delete(id);
+        break;
+      case Constant.SUP:
+        data = await this.supRepository.delete(id);
+        break;
+      case Constant.TABLEAU_ANGLE_2:
+        data = await this.tableauAngle2Repository.delete(id);
+        break;
+      case Constant.TABLEAU_BILLES:
+        data = await this.tableauBillesRepository.delete(id);
+        break;
+      case Constant.TABLEAU_BUSES_CARACTERISTIQUE:
+        data = await this.tableauBusesCaracteristiqueRepository.delete(id);
+        break;
+      case Constant.TABLEAU_LISTE_BUSES:
+        data = await this.tableauListeBusesRepository.delete(id);
+        break;
+      case Constant.TABLEAU_MARK:
+        data = await this.tableauMarkRepository.delete(id);
+        break;
+      case Constant.TABLEAU_MESH:
+        data = await this.tableauMeshRepository.delete(id);
+        break;
+      case Constant.TABLEAU_P:
+        data = await this.tableauPRepository.delete(id);
+        break;
+      case Constant.TABLEAU_Q:
+        data = await this.tableauQRepository.delete(id);
+        break;
+      case Constant.TABLEAU_R:
+        data = await this.tableauRRepository.delete(id);
+        break;
+      case Constant.TABLEAU_RR:
+        data = await this.tableauRRRepository.delete(id);
+        break;
+      case Constant.TABLEAU_RW:
+        data = await this.tableauRWRepository.delete(id);
+        break;
+      case Constant.TABLEAU_S:
+        data = await this.tableauSRepository.delete(id);
+        break;
+      case Constant.TABLEAU_SELECT:
+        data = await this.tableauSelectRepository.delete(id);
+        break;
+      case Constant.TABLEAU1_2:
+        data = await this.tableau12Repository.delete(id);
+        break;
+      case Constant.TABLEAU1_1:
+        data = await this.tableau11Repository.delete(id);
+        break;
+      case Constant.TABLEAU1:
+        data = await this.tableau1Repository.delete(id);
+        break;
+      case Constant.TEMPORAIRE:
+        data = await this.temporaireRepository.delete(id);
+        break;
+      case Constant.TOPO:
+        data = await this.topoRepository.delete(id);
+        break;
+      case Constant.TRANSVERSALES:
+        data = await this.transversalesRepository.delete(id);
+        break;
+      case Constant.TYPE_VOIE:
+        data = await this.typeVoieRepository.delete(id);
+        break;
+      case Constant.VOIE:
+        data = await this.voieRepository.delete(id);
+        break;
+      default:
+        break;
+    }
+
+    return {
+      status: HttpStatus.OK,
+      data: null,
+      pagination: null,
+      message: data ? 'Success' : 'Failed',
       code: ApiCode.SUCCESS,
     };
   }
