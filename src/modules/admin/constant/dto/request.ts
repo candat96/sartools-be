@@ -711,4 +711,6 @@ export class AddConstantRequest extends GetConstantRequest {
   voie: VoieDTO;
 }
 
-export class UpdateConstantDTO extends AddConstantRequest {}
+export class UpdateConstantRequest extends AddConstantRequest {}
+
+export class DeleteConstantRequest extends GetConstantRequest {}
