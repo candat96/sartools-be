@@ -27,11 +27,12 @@ export class AuthService {
     const user = await this.userRepository.findOneBy({
       email,
       role: Role.ADMIN,
-      status: UserStatus.ACTIVE,
-      deletedAt: null,
     });
     if (!user) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
+    }
+    if (user.status !== UserStatus.ACTIVE) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_INACTIVED);
     }
 
     const { salt, password } = user;
