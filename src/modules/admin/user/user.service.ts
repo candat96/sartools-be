@@ -35,7 +35,7 @@ export class UserService {
     const existed = await this.userRepository.findOneBy({
       email: dto.email,
       role: Role.USER,
-      deletedAt: null,
+      isDeleted: false,
     });
     if (existed) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_EXISTED);
@@ -80,7 +80,7 @@ export class UserService {
   ): Promise<ApiResponse<UpdateUserResponse>> {
     const user = await this.userRepository.findOneBy({
       id,
-      deletedAt: null,
+      isDeleted: false,
     });
     if (!user) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
@@ -116,22 +116,22 @@ export class UserService {
             {
               name: ILike(`%${search}%`),
               role: Role.USER,
-              deletedAt: null,
+              isDeleted: false,
             },
             {
               email: ILike(`%${search}%`),
               role: Role.USER,
-              deletedAt: null,
+              isDeleted: false,
             },
           ]
-        : { role: Role.USER, deletedAt: null },
+        : { role: Role.USER, isDeleted: false },
       order: { createdAt: 'DESC' },
       take: size,
       skip: (page - 1) * size,
     });
 
     const total = await this.userRepository.count({
-      where: { role: Role.USER, deletedAt: null },
+      where: { role: Role.USER, isDeleted: false },
     });
     const data = users.map((item) => _.omit(item, ['salt', 'password']));
 
@@ -152,13 +152,18 @@ export class UserService {
     const user = await this.userRepository.findBy({
       id: In(id),
       role: Role.USER,
-      deletedAt: null,
+      isDeleted: false,
     });
     if (!user || !user.length) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
     }
 
-    await this.userRepository.softDelete(id);
+    await this.userRepository.save(
+      user.map((item) => ({
+        ...item,
+        isDeleted: true,
+      })),
+    );
 
     return {
       status: HttpStatus.OK,

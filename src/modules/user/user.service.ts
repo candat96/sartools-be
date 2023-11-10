@@ -6,10 +6,10 @@ import { LessThanOrEqual, Repository } from 'typeorm';
 import { GetUserProfileResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { ApiCode } from '../../common/constants/api-code';
-import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
-import { User, UserStatus } from '../database/model/entities';
-import { ApiException } from '../../common/exception/api-exception';
 import { ErrorCode } from '../../common/constants/error';
+import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
+import { ApiException } from '../../common/exception/api-exception';
+import { User, UserStatus } from '../database/model/entities';
 
 @Injectable()
 export class UserService {
@@ -23,10 +23,12 @@ export class UserService {
   ): Promise<ApiResponse<GetUserProfileResponse>> {
     const user = await this.userRepository.findOneBy({
       id: userId,
-      deletedAt: null,
     });
     if (user.status === UserStatus.INACTIVE) {
-      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_INACTIVE);
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_INACTIVED);
+    }
+    if (user.isDeleted !== false) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_DELETED);
     }
 
     return {
@@ -43,7 +45,7 @@ export class UserService {
     const users = await this.userRepository.findBy({
       endDate: LessThanOrEqual(now),
       status: UserStatus.ACTIVE,
-      deletedAt: null,
+      isDeleted: false,
     });
 
     if (users && users.length) {

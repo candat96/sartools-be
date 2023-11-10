@@ -73,4 +73,7 @@ export class User extends BaseEntity {
 
   @Column({ nullable: false, type: 'enum', enum: Role, default: Role.USER })
   role: Role;
+
+  @Column({ nullable: false, default: false })
+  isDeleted: boolean;
 }
