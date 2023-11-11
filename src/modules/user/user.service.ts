@@ -6,10 +6,10 @@ import { LessThanOrEqual, Repository } from 'typeorm';
 import { GetUserProfileResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { ApiCode } from '../../common/constants/api-code';
-import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
-import { User, UserStatus } from '../database/model/entities';
-import { ApiException } from '../../common/exception/api-exception';
 import { ErrorCode } from '../../common/constants/error';
+import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
+import { ApiException } from '../../common/exception/api-exception';
+import { User, UserStatus } from '../database/model/entities';
 
 @Injectable()
 export class UserService {
