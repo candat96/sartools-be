@@ -31,14 +31,21 @@ export class AuthService {
   async login(dto: LoginRequest): Promise<ApiResponse<LoginResponse>> {
     const { email, password: inputPassword } = dto;
 
-    const user = await this.userRepository.findOneBy({
+    const users = await this.userRepository.findBy({
       email,
       role: Role.USER,
-      status: UserStatus.ACTIVE,
-      deletedAt: null,
     });
-    if (!user) {
+    if (!users.length) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
+    }
+
+    const user = users.find((item) => !item.isDeleted);
+    const deletedUser = users.find((item) => item.isDeleted);
+    if (!user && deletedUser) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_DELETED);
+    }
+    if (user.status !== UserStatus.ACTIVE) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_INACTIVED);
     }
 
     const { salt, password } = user;
@@ -71,7 +78,7 @@ export class AuthService {
     const user = await this.userRepository.findOneBy({
       email: dto.email,
       role: Role.USER,
-      deletedAt: null,
+      isDeleted: false,
     });
     if (user) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_EXISTED);
@@ -111,7 +118,7 @@ export class AuthService {
     const user = await this.userRepository.findOneBy({
       id: userId,
       role: Role.USER,
-      deletedAt: null,
+      isDeleted: false,
     });
 
     const { salt, password } = user;
