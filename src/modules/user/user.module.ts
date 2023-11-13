@@ -6,11 +6,11 @@ import { CronService } from './cron.service';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { Config } from '../../config/config';
-import { User } from '../database/model/entities';
+import { Location, User } from '../database/model/entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Location]),
     JwtModule.register({ secret: Config.JWT_SECRET }),
     ScheduleModule.forRoot(),
   ],

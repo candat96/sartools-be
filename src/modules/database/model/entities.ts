@@ -33,3 +33,6 @@ export * from './temporaire.entity';
 export * from './tableau1.entity';
 export * from './_v15.entity';
 export * from './p-sat.entity';
+export * from './modules.entity';
+export * from './view.entity';
+export * from './location.entity';
