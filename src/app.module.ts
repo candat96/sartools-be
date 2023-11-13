@@ -1,6 +1,7 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import * as childProcess from 'child_process';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -10,12 +11,15 @@ import { Config } from './config/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { Modules } from './modules/database/model/entities';
+import { ModuleModule } from './modules/module/module.module';
 import { TelegramBotModule } from './modules/telegram-bot/telegram-bot.module';
 import { UserModule } from './modules/user/user.module';
 
 const logger = new LoggerService();
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Modules]),
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public'),
       exclude: ['/sartools*'],
@@ -32,6 +36,7 @@ const logger = new LoggerService();
     AdminModule,
     AuthModule,
     UserModule,
+    ModuleModule,
     TelegramBotModule,
   ],
   controllers: [AppController],

@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Config } from './config';
+import { FRANCE_TIME_ZONE } from '../common/constants/timezone';
 
 export const DatabaseConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -8,6 +9,7 @@ export const DatabaseConfig: TypeOrmModuleOptions = {
   username: Config.DATABASE.DATABASE_USER,
   password: Config.DATABASE.DATABASE_PASSWORD,
   database: Config.DATABASE.DATABASE_NAME,
+  timezone: FRANCE_TIME_ZONE,
   synchronize: true,
   autoLoadEntities: true,
   logging: false,

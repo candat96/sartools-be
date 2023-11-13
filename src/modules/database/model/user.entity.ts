@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { Location, View } from './entities';
 
 export enum UserStatus {
   ACTIVE = 'ACTIVE',
@@ -76,4 +77,14 @@ export class User extends BaseEntity {
 
   @Column({ nullable: false, default: false })
   isDeleted: boolean;
+
+  @OneToMany(() => View, (view) => view.user, {
+    cascade: true,
+  })
+  views: View[];
+
+  @OneToMany(() => Location, (location) => location.user, {
+    cascade: true,
+  })
+  locations: Location[];
 }
