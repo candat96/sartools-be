@@ -41,3 +41,19 @@ export enum Constant {
   TYPE_VOIE = 'TYPE_VOIE',
   VOIE = 'VOIE',
 }
+
+export enum SortUserOptions {
+  SERIAL = 'SERIAL',
+  NAME = 'NAME',
+  EMAIL = 'EMAIL',
+  PHONE = 'PHONE',
+  COMPANY = 'COMPANY',
+  STATUS = 'STATUS',
+  END_DATE = 'END_DATE',
+  POSITION = 'POSITION',
+}
+
+export enum SortOption {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}

@@ -9,6 +9,7 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
+import { SortOption, SortUserOptions } from '../../../../common/constants/enum';
 import { REGEX } from '../../../../common/constants/regex';
 import { Position, UserStatus } from '../../../database/model/entities';
 
@@ -118,6 +119,16 @@ export class GetUserRequest {
   @IsOptional()
   @Transform(({ value }) => Number(value))
   size: number;
+
+  @ApiProperty({ required: false, enum: SortUserOptions })
+  @IsOptional()
+  @IsEnum(SortUserOptions)
+  sortBy: SortUserOptions;
+
+  @ApiProperty({ required: false, enum: SortOption })
+  @IsOptional()
+  @IsEnum(SortOption)
+  sortOption: SortOption;
 }
 
 export class DeleteUserRequest {

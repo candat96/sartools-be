@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
-import { ILike, In, Repository } from 'typeorm';
+import { FindOptionsOrder, ILike, In, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import {
   CreateUserRequest,
@@ -16,6 +16,7 @@ import {
 } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
+import { SortOption, SortUserOptions } from '../../../common/constants/enum';
 import { ErrorCode } from '../../../common/constants/error';
 import { FRANCE_TIME_ZONE } from '../../../common/constants/timezone';
 import { ApiException } from '../../../common/exception/api-exception';
@@ -108,7 +109,63 @@ export class UserService {
   }
 
   async getUsers(dto: GetUserRequest): Promise<ApiResponse<GetUserResponse[]>> {
-    const { search, page, size } = dto;
+    const { search, sortBy, sortOption, page, size } = dto;
+
+    let order: FindOptionsOrder<User> = { createdAt: 'DESC' };
+    switch (true) {
+      case sortBy === SortUserOptions.SERIAL && sortOption === SortOption.ASC:
+        order = { id: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.SERIAL && sortOption === SortOption.DESC:
+        order = { id: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.NAME && sortOption === SortOption.ASC:
+        order = { name: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.NAME && sortOption === SortOption.DESC:
+        order = { name: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.EMAIL && sortOption === SortOption.ASC:
+        order = { email: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.EMAIL && sortOption === SortOption.DESC:
+        order = { email: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.PHONE && sortOption === SortOption.ASC:
+        order = { phone: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.PHONE && sortOption === SortOption.DESC:
+        order = { phone: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.COMPANY && sortOption === SortOption.ASC:
+        order = { company: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.COMPANY && sortOption === SortOption.DESC:
+        order = { company: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.END_DATE && sortOption === SortOption.ASC:
+        order = { endDate: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.END_DATE &&
+        sortOption === SortOption.DESC:
+        order = { endDate: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.STATUS && sortOption === SortOption.ASC:
+        order = { status: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.STATUS && sortOption === SortOption.DESC:
+        order = { status: 'DESC' };
+        break;
+      case sortBy === SortUserOptions.POSITION && sortOption === SortOption.ASC:
+        order = { position: 'ASC' };
+        break;
+      case sortBy === SortUserOptions.POSITION &&
+        sortOption === SortOption.DESC:
+        order = { position: 'DESC' };
+        break;
+      default:
+        break;
+    }
 
     const users = await this.userRepository.find({
       where: search
@@ -125,7 +182,7 @@ export class UserService {
             },
           ]
         : { role: Role.USER, isDeleted: false },
-      order: { createdAt: 'DESC' },
+      order,
       take: size,
       skip: (page - 1) * size,
     });
