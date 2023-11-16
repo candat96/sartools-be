@@ -13,8 +13,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { DashboardService } from './dashboard.service';
-import { UserStaticRequest } from './dto/request';
-import { UserStaticResponse } from './dto/response';
+import { UserStaticRequest, VisitWithinDayRequest } from './dto/request';
+import { UserStaticResponse, VisitWithinDayResponse } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { Roles } from '../../../common/decorator/role.decorator';
 import { AuthGuard } from '../../../common/guards/auth.guard';
@@ -38,9 +38,30 @@ export class DashboardController {
   @ApiOkResponse()
   async userStatic(
     @Query() query: UserStaticRequest,
-  ): Promise<ApiResponse<UserStaticResponse[]>> {
+  ): Promise<ApiResponse<UserStaticResponse>> {
     try {
       return await this.dashboardService.userStatic(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('visit')
+  @ApiOperation({
+    summary: 'Visit within day',
+    description: 'Visit within day',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async visitWithinDay(
+    @Query() query: VisitWithinDayRequest,
+  ): Promise<ApiResponse<VisitWithinDayResponse[]>> {
+    try {
+      return await this.dashboardService.visitWithinDay(query);
     } catch (err) {
       console.log(err);
       throw err;
