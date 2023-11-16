@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DashboardController } from './dashboard.controller';
 import { DashboardService } from './dashboard.service';
 import { Config } from '../../../config/config';
-import { User } from '../../database/model/entities';
+import { User, View } from '../../database/model/entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, View]),
     JwtModule.register({ secret: Config.JWT_SECRET }),
   ],
   controllers: [DashboardController],

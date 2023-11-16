@@ -18,3 +18,15 @@ export class UserStaticRequest {
   @IsEnum(UserStaticOption)
   option: UserStaticOption;
 }
+
+export class VisitWithinDayRequest {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsDateString()
+  from: Date;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsDateString()
+  to: Date;
+}
