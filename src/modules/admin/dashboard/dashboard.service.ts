@@ -81,20 +81,32 @@ export class DashboardService {
   ): Promise<ApiResponse<VisitWithinDayResponse[]>> {
     const { from, to } = dto;
 
-    const data = await this.viewRepository
+    const raw: VisitWithinDayResponse[] = await this.viewRepository
       .createQueryBuilder('v')
-      .select('DATE_FORMAT(v.createdAt, "%H:00:00")', 'hour')
+      .select('DATE_FORMAT(v.createdAt, "%H")', 'hour')
       .addSelect('COUNT(DISTINCT v.userId)', 'count')
       .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
       .groupBy('hour')
-      .getRawMany();
+      .getRawMany().then((d) => d.map((item) => ({
+        ...item,
+        count: Number(item.count),
+      })));
+
+    const data: VisitWithinDayResponse[] = Array.from({ length: 25 }, (_, index: number) => {
+      const hour = index.toString().padStart(2, '0');
+      const existed = raw.find((item) => item.hour === hour);
+
+      if (existed) return existed;
+
+      return {
+        hour,
+        count: 0
+      };
+    });
 
     return {
       status: HttpStatus.OK,
-      data: data.map((item) => ({
-        ...item,
-        count: Number(item.count),
-      })),
+      data,
       pagination: null,
       message: null,
       code: ApiCode.SUCCESS,
