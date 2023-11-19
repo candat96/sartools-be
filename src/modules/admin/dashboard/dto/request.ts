@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsNotEmpty } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsDateString, IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 import { UserStaticOption } from '../../../../common/constants/enum';
 
 export class UserStaticRequest {
@@ -29,4 +30,16 @@ export class VisitWithinDayRequest {
   @IsNotEmpty()
   @IsDateString()
   to: Date;
+}
+
+export class ModuleViewRequest extends VisitWithinDayRequest {
+  @ApiProperty({ required: true, default: 1 })
+  @IsNumber()
+  @Transform(({ value }) => Number(value))
+  page: number;
+
+  @ApiProperty({ required: true, default: 20 })
+  @IsNumber()
+  @Transform(({ value }) => Number(value))
+  size: number;
 }
