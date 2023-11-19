@@ -13,8 +13,16 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { DashboardService } from './dashboard.service';
-import { UserStaticRequest, VisitWithinDayRequest } from './dto/request';
-import { UserStaticResponse, VisitWithinDayResponse } from './dto/response';
+import {
+  ModuleViewRequest,
+  UserStaticRequest,
+  VisitWithinDayRequest,
+} from './dto/request';
+import {
+  ModuleViewResponse,
+  UserStaticResponse,
+  VisitWithinDayResponse,
+} from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { Roles } from '../../../common/decorator/role.decorator';
 import { AuthGuard } from '../../../common/guards/auth.guard';
@@ -62,6 +70,27 @@ export class DashboardController {
   ): Promise<ApiResponse<VisitWithinDayResponse[]>> {
     try {
       return await this.dashboardService.visitWithinDay(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('module-view')
+  @ApiOperation({
+    summary: 'View by modules',
+    description: 'View by modules',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async moduleView(
+    @Query() query: ModuleViewRequest,
+  ): Promise<ApiResponse<ModuleViewResponse>> {
+    try {
+      return await this.dashboardService.moduleView(query);
     } catch (err) {
       console.log(err);
       throw err;
