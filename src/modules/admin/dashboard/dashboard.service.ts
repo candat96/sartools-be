@@ -2,7 +2,9 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import {
+  BounceRequest,
   ModuleViewRequest,
+  RetentionRequest,
   UserStaticRequest,
   VisitWithinDayRequest,
 } from './dto/request';
@@ -15,9 +17,14 @@ import {
   ModuleViewResponse,
   TotalModuleInterface,
   ModuleViewStatisticInterface,
+  BounceResponse,
+  UsedByDayRawInterface,
+  UsedInterface,
+  RetentionResponse,
 } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
+import { fillMissingDates } from '../../../common/utils/utils';
 import { User, View } from '../../database/model/entities';
 
 @Injectable()
@@ -32,14 +39,14 @@ export class DashboardService {
   async userStatic(
     dto: UserStaticRequest,
   ): Promise<ApiResponse<UserStaticResponse>> {
-    const { startDate, endDate } = dto;
+    const { from, to } = dto;
 
     const data: StaticResponse[] = await this.userRepository
       .createQueryBuilder()
       .select('DATE(createdAt) as date')
       .addSelect('COUNT(id) as total')
-      .where('createdAt >= :startDate', { startDate })
-      .andWhere('createdAt <= :endDate', { endDate })
+      .where('createdAt >= :from', { from })
+      .andWhere('createdAt <= :to', { to })
       .andWhere('isDeleted = false')
       .groupBy('date')
       .getRawMany();
@@ -48,16 +55,16 @@ export class DashboardService {
       where: { isDeleted: false },
     });
     const newUsers = await this.userRepository.countBy({
-      createdAt: Between(startDate, endDate),
+      createdAt: Between(from, to),
       isDeleted: false,
     });
     const viewData: ViewDataResponse = await this.viewRepository
       .createQueryBuilder()
       .select('SUM(view) as views')
       .addSelect('SUM(time) as time')
-      .where('createdAt >= :startDate AND createdAt <= :endDate', {
-        startDate,
-        endDate,
+      .where('createdAt >= :from AND createdAt <= :to', {
+        from,
+        to,
       })
       .getRawOne();
 
@@ -199,6 +206,84 @@ export class DashboardService {
         size,
         total: total?.total ? Number(total.total) : null,
       },
+      message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async bounce(dto: BounceRequest): Promise<ApiResponse<BounceResponse>> {
+    const { from, to } = dto;
+
+    const raw: UsedByDayRawInterface[] = await this.viewRepository
+      .createQueryBuilder('v')
+      .select('DATE(v.createdAt) AS date, COUNT(DISTINCT v.userId) AS count')
+      .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
+      .groupBy('date')
+      .getRawMany();
+
+    const bounce = fillMissingDates(from, to, raw);
+
+    const used: UsedInterface = await this.viewRepository
+      .createQueryBuilder('v')
+      .select('COUNT(DISTINCT v.userId) AS count')
+      .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
+      .getRawOne();
+
+    const total: number = await this.userRepository.count({
+      where: { isDeleted: false },
+    });
+
+    return {
+      status: HttpStatus.OK,
+      data: {
+        bounce: bounce.map((item) => ({
+          date: new Date(item.date).toISOString(),
+          percent: Number(
+            (((total - Number(item.count)) / total) * 100).toFixed(2),
+          ),
+        })),
+        rate: Number((((total - Number(used.count)) / total) * 100).toFixed(2)),
+      },
+      pagination: null,
+      message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async retention(
+    dto: RetentionRequest,
+  ): Promise<ApiResponse<RetentionResponse>> {
+    const { from, to } = dto;
+
+    const raw: UsedByDayRawInterface[] = await this.viewRepository
+      .createQueryBuilder('v')
+      .select('DATE(v.createdAt) AS date, COUNT(DISTINCT v.userId) AS count')
+      .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
+      .groupBy('date')
+      .getRawMany();
+
+    const retention = fillMissingDates(from, to, raw);
+
+    const used: UsedInterface = await this.viewRepository
+      .createQueryBuilder('v')
+      .select('COUNT(DISTINCT v.userId) AS count')
+      .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
+      .getRawOne();
+
+    const total: number = await this.userRepository.count({
+      where: { isDeleted: false },
+    });
+
+    return {
+      status: HttpStatus.OK,
+      data: {
+        retention: retention.map((item) => ({
+          date: new Date(item.date).toISOString(),
+          percent: Number(((Number(item.count) / total) * 100).toFixed(2)),
+        })),
+        rate: Number(((Number(used.count) / total) * 100).toFixed(2)),
+      },
+      pagination: null,
       message: null,
       code: ApiCode.SUCCESS,
     };

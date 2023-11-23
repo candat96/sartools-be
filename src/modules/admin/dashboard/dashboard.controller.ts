@@ -14,12 +14,16 @@ import {
 } from '@nestjs/swagger';
 import { DashboardService } from './dashboard.service';
 import {
+  BounceRequest,
   ModuleViewRequest,
+  RetentionRequest,
   UserStaticRequest,
   VisitWithinDayRequest,
 } from './dto/request';
 import {
+  BounceResponse,
   ModuleViewResponse,
+  RetentionResponse,
   UserStaticResponse,
   VisitWithinDayResponse,
 } from './dto/response';
@@ -91,6 +95,48 @@ export class DashboardController {
   ): Promise<ApiResponse<ModuleViewResponse>> {
     try {
       return await this.dashboardService.moduleView(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('bounce')
+  @ApiOperation({
+    summary: 'Bounce rate',
+    description: 'Bounce rate',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async bounce(
+    @Query() query: BounceRequest,
+  ): Promise<ApiResponse<BounceResponse>> {
+    try {
+      return await this.dashboardService.bounce(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('retention')
+  @ApiOperation({
+    summary: 'Retention rate',
+    description: 'Retention rate',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async retention(
+    @Query() query: RetentionRequest,
+  ): Promise<ApiResponse<RetentionResponse>> {
+    try {
+      return await this.dashboardService.retention(query);
     } catch (err) {
       console.log(err);
       throw err;
