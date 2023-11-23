@@ -53,3 +53,26 @@ export class ModuleViewResponse {
   viewsPerUser: number;
   averageUsageTime: number;
 }
+
+export class UsedInterface {
+  count: number;
+}
+
+export class UsedByDayRawInterface extends UsedInterface {
+  date: string;
+}
+
+export class PercentInterface {
+  date: string;
+  percent: number;
+}
+
+export class BounceResponse {
+  bounce: PercentInterface[];
+  rate: number;
+}
+
+export class RetentionResponse {
+  retention: PercentInterface[];
+  rate: number;
+}

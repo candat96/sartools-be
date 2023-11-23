@@ -7,12 +7,12 @@ export class UserStaticRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsDateString()
-  startDate: Date;
+  from: Date;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsDateString()
-  endDate: Date;
+  to: Date;
 
   @ApiProperty({ required: true, enum: UserStaticOption })
   @IsNotEmpty()
@@ -43,3 +43,6 @@ export class ModuleViewRequest extends VisitWithinDayRequest {
   @Transform(({ value }) => Number(value))
   size: number;
 }
+
+export class BounceRequest extends VisitWithinDayRequest {}
+export class RetentionRequest extends VisitWithinDayRequest {}
