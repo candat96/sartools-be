@@ -18,4 +18,15 @@ export class AppController {
   healthCheck(): ApiResponse<string> {
     return this.appService.healthCheck();
   }
+
+  @Get('dump')
+  @ApiOperation({
+    summary: 'Dump database',
+    description: 'Dump database',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async dump(): Promise<ApiResponse<string>> {
+    return await this.appService.dump();
+  }
 }

@@ -15,4 +15,7 @@ export const Config = {
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || '',
     DATABASE_NAME: process.env.DATABASE_NAME || 'sartools',
   },
+  PUBLIC_FILE_UPLOAD_PATH: process.env.PUBLIC_FILE_UPLOAD_PATH || '',
+  SARTOOLS_HOST: process.env.SARTOOLS_HOST || 'http://localhost:8083',
+  MYSQL_CONTAINER_NAME: process.env.MYSQL_CONTAINER_NAME || 'mysql-sartools',
 };
