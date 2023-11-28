@@ -1,4 +1,4 @@
-export enum UserStaticOption {
+export enum QueryOption {
   DAY = 'DAY',
   WEEK = 'WEEK',
   MONTH = 'MONTH',
