@@ -24,6 +24,7 @@ import {
 } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
+import { QueryOption } from '../../../common/constants/enum';
 import { fillMissingDates } from '../../../common/utils/utils';
 import { User, View } from '../../database/model/entities';
 
@@ -39,11 +40,29 @@ export class DashboardService {
   async userStatic(
     dto: UserStaticRequest,
   ): Promise<ApiResponse<UserStaticResponse>> {
-    const { from, to } = dto;
+    const { from, to, option } = dto;
+
+    let queryString = 'DATE(createdAt)';
+    switch (option) {
+      case QueryOption.DAY:
+        queryString = 'DATE(createdAt)';
+        break;
+      case QueryOption.WEEK:
+        queryString = 'WEEK(createdAt)';
+        break;
+      case QueryOption.MONTH:
+        queryString = 'MONTH(createdAt)';
+        break;
+      case QueryOption.YEAR:
+        queryString = 'YEAR(createdAt)';
+        break;
+      default:
+        break;
+    }
 
     const data: StaticResponse[] = await this.userRepository
       .createQueryBuilder()
-      .select('DATE(createdAt) as date')
+      .select(`${queryString} as date`)
       .addSelect('COUNT(id) as total')
       .where('createdAt >= :from', { from })
       .andWhere('createdAt <= :to', { to })
@@ -72,7 +91,10 @@ export class DashboardService {
       status: HttpStatus.OK,
       data: {
         static: data.map((item) => ({
-          date: new Date(item.date).toISOString(),
+          date:
+            option === QueryOption.DAY
+              ? new Date(item.date).toISOString()
+              : item.date.toString(),
           total: Number(item.total),
         })),
         totalUsers,
@@ -212,11 +234,29 @@ export class DashboardService {
   }
 
   async bounce(dto: BounceRequest): Promise<ApiResponse<BounceResponse>> {
-    const { from, to } = dto;
+    const { from, to, option } = dto;
+
+    let queryString = 'DATE(createdAt)';
+    switch (option) {
+      case QueryOption.DAY:
+        queryString = 'DATE(createdAt)';
+        break;
+      case QueryOption.WEEK:
+        queryString = 'WEEK(createdAt)';
+        break;
+      case QueryOption.MONTH:
+        queryString = 'MONTH(createdAt)';
+        break;
+      case QueryOption.YEAR:
+        queryString = 'YEAR(createdAt)';
+        break;
+      default:
+        break;
+    }
 
     const raw: UsedByDayRawInterface[] = await this.viewRepository
       .createQueryBuilder('v')
-      .select('DATE(v.createdAt) AS date, COUNT(DISTINCT v.userId) AS count')
+      .select(`${queryString} AS date, COUNT(DISTINCT v.userId) AS count`)
       .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
       .groupBy('date')
       .getRawMany();
@@ -237,7 +277,10 @@ export class DashboardService {
       status: HttpStatus.OK,
       data: {
         bounce: bounce.map((item) => ({
-          date: new Date(item.date).toISOString(),
+          date:
+            option === QueryOption.DAY
+              ? new Date(item.date).toISOString()
+              : item.date.toString(),
           percent: Number(
             (((total - Number(item.count)) / total) * 100).toFixed(2),
           ),
@@ -253,11 +296,29 @@ export class DashboardService {
   async retention(
     dto: RetentionRequest,
   ): Promise<ApiResponse<RetentionResponse>> {
-    const { from, to } = dto;
+    const { from, to, option } = dto;
+
+    let queryString = 'DATE(createdAt)';
+    switch (option) {
+      case QueryOption.DAY:
+        queryString = 'DATE(createdAt)';
+        break;
+      case QueryOption.WEEK:
+        queryString = 'WEEK(createdAt)';
+        break;
+      case QueryOption.MONTH:
+        queryString = 'MONTH(createdAt)';
+        break;
+      case QueryOption.YEAR:
+        queryString = 'YEAR(createdAt)';
+        break;
+      default:
+        break;
+    }
 
     const raw: UsedByDayRawInterface[] = await this.viewRepository
       .createQueryBuilder('v')
-      .select('DATE(v.createdAt) AS date, COUNT(DISTINCT v.userId) AS count')
+      .select(`${queryString} AS date, COUNT(DISTINCT v.userId) AS count`)
       .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
       .groupBy('date')
       .getRawMany();
@@ -278,7 +339,10 @@ export class DashboardService {
       status: HttpStatus.OK,
       data: {
         retention: retention.map((item) => ({
-          date: new Date(item.date).toISOString(),
+          date:
+            option === QueryOption.DAY
+              ? new Date(item.date).toISOString()
+              : item.date.toString(),
           percent: Number(((Number(item.count) / total) * 100).toFixed(2)),
         })),
         rate: Number(((Number(used.count) / total) * 100).toFixed(2)),
