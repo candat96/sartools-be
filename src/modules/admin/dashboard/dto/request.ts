@@ -46,3 +46,10 @@ export class ModuleViewRequest extends VisitWithinDayRequest {
 
 export class BounceRequest extends UserStaticRequest {}
 export class RetentionRequest extends UserStaticRequest {}
+
+export class RegionRequest {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsDateString()
+  date: Date;
+}

@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CronService } from './cron.service';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { MapboxService } from '../../common/services/mapbox.service';
 import { Config } from '../../config/config';
 import { Location, User } from '../database/model/entities';
 
@@ -15,6 +16,6 @@ import { Location, User } from '../database/model/entities';
     ScheduleModule.forRoot(),
   ],
   controllers: [UserController],
-  providers: [UserService, CronService],
+  providers: [UserService, CronService, MapboxService],
 })
 export class UserModule {}
