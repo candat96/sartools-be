@@ -16,6 +16,7 @@ import { DashboardService } from './dashboard.service';
 import {
   BounceRequest,
   ModuleViewRequest,
+  RegionRequest,
   RetentionRequest,
   UserStaticRequest,
   VisitWithinDayRequest,
@@ -23,6 +24,7 @@ import {
 import {
   BounceResponse,
   ModuleViewResponse,
+  RegionResponse,
   RetentionResponse,
   UserStaticResponse,
   VisitWithinDayResponse,
@@ -137,6 +139,27 @@ export class DashboardController {
   ): Promise<ApiResponse<RetentionResponse>> {
     try {
       return await this.dashboardService.retention(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('region')
+  @ApiOperation({
+    summary: 'Region',
+    description: 'Region',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async region(
+    @Query() query: RegionRequest,
+  ): Promise<ApiResponse<RegionResponse[]>> {
+    try {
+      return await this.dashboardService.region(query);
     } catch (err) {
       console.log(err);
       throw err;

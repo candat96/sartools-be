@@ -76,3 +76,11 @@ export class RetentionResponse {
   retention: PercentInterface[];
   rate: number;
 }
+
+export class RegionResponse {
+  regionId: string;
+  regionName: string;
+  countryId: string;
+  countryName: string;
+  total: number;
+}

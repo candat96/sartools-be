@@ -4,6 +4,7 @@ import { Between, Repository } from 'typeorm';
 import {
   BounceRequest,
   ModuleViewRequest,
+  RegionRequest,
   RetentionRequest,
   UserStaticRequest,
   VisitWithinDayRequest,
@@ -21,12 +22,13 @@ import {
   UsedByDayRawInterface,
   UsedInterface,
   RetentionResponse,
+  RegionResponse,
 } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { QueryOption } from '../../../common/constants/enum';
 import { fillMissingDates } from '../../../common/utils/utils';
-import { User, View } from '../../database/model/entities';
+import { Location, User, View } from '../../database/model/entities';
 
 @Injectable()
 export class DashboardService {
@@ -35,6 +37,8 @@ export class DashboardService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(View)
     private readonly viewRepository: Repository<View>,
+    @InjectRepository(Location)
+    private readonly locationRepository: Repository<Location>,
   ) {}
 
   async userStatic(
@@ -347,6 +351,33 @@ export class DashboardService {
         })),
         rate: Number(((Number(used.count) / total) * 100).toFixed(2)),
       },
+      pagination: null,
+      message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async region(dto: RegionRequest): Promise<ApiResponse<RegionResponse[]>> {
+    const { date } = dto;
+
+    const data: RegionResponse[] = await this.locationRepository
+      .createQueryBuilder('l')
+      .select(
+        'l.regionId as regionId, l.regionName as regionName, l.countryId as countryId, l.countryName as countryName, COUNT(l.userId) as total',
+      )
+      .where('DATE(l.createdAt) = DATE(:date)', { date })
+      .groupBy('regionId')
+      .addGroupBy('regionName')
+      .addGroupBy('countryId')
+      .addGroupBy('countryName')
+      .getRawMany();
+
+    return {
+      status: HttpStatus.OK,
+      data: data.map((item) => ({
+        ...item,
+        total: Number(item.total),
+      })),
       pagination: null,
       message: null,
       code: ApiCode.SUCCESS,

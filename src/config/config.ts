@@ -15,4 +15,7 @@ export const Config = {
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || '',
     DATABASE_NAME: process.env.DATABASE_NAME || 'sartools',
   },
+  MAPBOX_URL: process.env.MAPBOX_URL,
+  MAPBOX_ENDPOINT: process.env.MAPBOX_ENDPOINT,
+  MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN,
 };
