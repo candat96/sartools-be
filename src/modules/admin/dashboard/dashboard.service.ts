@@ -27,7 +27,7 @@ import {
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { QueryOption } from '../../../common/constants/enum';
-import { fillMissingDates, getYear } from '../../../common/utils/utils';
+import { getYear } from '../../../common/utils/utils';
 import { Location, User, View } from '../../database/model/entities';
 
 @Injectable()
@@ -269,8 +269,6 @@ export class DashboardService {
       .groupBy('date')
       .getRawMany();
 
-    const bounce = fillMissingDates(from, to, raw);
-
     const used: UsedInterface = await this.viewRepository
       .createQueryBuilder('v')
       .select('COUNT(DISTINCT v.userId) AS count')
@@ -284,7 +282,7 @@ export class DashboardService {
     return {
       status: HttpStatus.OK,
       data: {
-        bounce: bounce.map((item) => ({
+        bounce: raw.map((item) => ({
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
@@ -334,8 +332,6 @@ export class DashboardService {
       .groupBy('date')
       .getRawMany();
 
-    const retention = fillMissingDates(from, to, raw);
-
     const used: UsedInterface = await this.viewRepository
       .createQueryBuilder('v')
       .select('COUNT(DISTINCT v.userId) AS count')
@@ -349,7 +345,7 @@ export class DashboardService {
     return {
       status: HttpStatus.OK,
       data: {
-        retention: retention.map((item) => ({
+        retention: raw.map((item) => ({
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
