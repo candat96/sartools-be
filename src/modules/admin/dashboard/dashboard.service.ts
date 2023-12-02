@@ -27,7 +27,7 @@ import {
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { QueryOption } from '../../../common/constants/enum';
-import { fillMissingDates } from '../../../common/utils/utils';
+import { fillMissingDates, getYear } from '../../../common/utils/utils';
 import { Location, User, View } from '../../database/model/entities';
 
 @Injectable()
@@ -45,6 +45,7 @@ export class DashboardService {
     dto: UserStaticRequest,
   ): Promise<ApiResponse<UserStaticResponse>> {
     const { from, to, option } = dto;
+    const year = getYear();
 
     let queryString = 'DATE(createdAt)';
     switch (option) {
@@ -98,7 +99,9 @@ export class DashboardService {
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
-              : item.date.toString(),
+              : option === QueryOption.YEAR
+              ? item.date.toString()
+              : `${item.date.toString()}/${year}`,
           total: Number(item.total),
         })),
         totalUsers,
@@ -239,6 +242,7 @@ export class DashboardService {
 
   async bounce(dto: BounceRequest): Promise<ApiResponse<BounceResponse>> {
     const { from, to, option } = dto;
+    const year = getYear();
 
     let queryString = 'DATE(createdAt)';
     switch (option) {
@@ -284,7 +288,9 @@ export class DashboardService {
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
-              : item.date.toString(),
+              : option === QueryOption.YEAR
+              ? item.date.toString()
+              : `${item.date.toString()}/${year}`,
           percent: Number(
             (((total - Number(item.count)) / total) * 100).toFixed(2),
           ),
@@ -301,6 +307,7 @@ export class DashboardService {
     dto: RetentionRequest,
   ): Promise<ApiResponse<RetentionResponse>> {
     const { from, to, option } = dto;
+    const year = getYear();
 
     let queryString = 'DATE(createdAt)';
     switch (option) {
@@ -346,7 +353,9 @@ export class DashboardService {
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
-              : item.date.toString(),
+              : option === QueryOption.YEAR
+              ? item.date.toString()
+              : `${item.date.toString()}/${year}`,
           percent: Number(((Number(item.count) / total) * 100).toFixed(2)),
         })),
         rate: Number(((Number(used.count) / total) * 100).toFixed(2)),
