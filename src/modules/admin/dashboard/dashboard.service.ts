@@ -375,6 +375,8 @@ export class DashboardService {
       .addGroupBy('regionName')
       .addGroupBy('countryId')
       .addGroupBy('countryName')
+      .orderBy('countryName', 'ASC')
+      .orderBy('regionName', 'ASC')
       .getRawMany();
 
     return {
