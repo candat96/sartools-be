@@ -370,7 +370,10 @@ export class DashboardService {
       .select(
         'l.regionId as regionId, l.regionName as regionName, l.countryId as countryId, l.countryName as countryName, COUNT(l.userId) as total',
       )
-      .where('DATE(l.createdAt) >= :from AND DATE(l.createdAt) <= :to', { from, to })
+      .where('DATE(l.createdAt) >= :from AND DATE(l.createdAt) <= :to', {
+        from,
+        to,
+      })
       .groupBy('regionId')
       .addGroupBy('regionName')
       .addGroupBy('countryId')
