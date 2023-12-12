@@ -363,14 +363,14 @@ export class DashboardService {
   }
 
   async region(dto: RegionRequest): Promise<ApiResponse<RegionResponse[]>> {
-    const { date } = dto;
+    const { from, to } = dto;
 
     const data: RegionResponse[] = await this.locationRepository
       .createQueryBuilder('l')
       .select(
         'l.regionId as regionId, l.regionName as regionName, l.countryId as countryId, l.countryName as countryName, COUNT(l.userId) as total',
       )
-      .where('DATE(l.createdAt) = DATE(:date)', { date })
+      .where('DATE(l.createdAt) >= :from AND DATE(l.createdAt) <= :to', { from, to })
       .groupBy('regionId')
       .addGroupBy('regionName')
       .addGroupBy('countryId')
