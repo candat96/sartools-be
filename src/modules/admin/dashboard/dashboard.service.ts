@@ -27,7 +27,7 @@ import {
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { QueryOption } from '../../../common/constants/enum';
-import { getYear } from '../../../common/utils/utils';
+import { fillMissingDates, fillMissingDatesStatic, getYear } from '../../../common/utils/utils';
 import { Location, User, View } from '../../database/model/entities';
 
 @Injectable()
@@ -75,6 +75,8 @@ export class DashboardService {
       .groupBy('date')
       .getRawMany();
 
+    const staticData = fillMissingDatesStatic(from, to, data);
+
     const totalUsers = await this.userRepository.count({
       where: { isDeleted: false },
     });
@@ -91,11 +93,11 @@ export class DashboardService {
         to,
       })
       .getRawOne();
-
+    
     return {
       status: HttpStatus.OK,
       data: {
-        static: data.map((item) => ({
+        static: staticData.map((item) => ({
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
@@ -268,6 +270,7 @@ export class DashboardService {
       .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
       .groupBy('date')
       .getRawMany();
+    const bounce = fillMissingDates(from, to, raw);
 
     const used: UsedInterface = await this.viewRepository
       .createQueryBuilder('v')
@@ -282,7 +285,7 @@ export class DashboardService {
     return {
       status: HttpStatus.OK,
       data: {
-        bounce: raw.map((item) => ({
+        bounce: bounce.map((item) => ({
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
@@ -331,6 +334,7 @@ export class DashboardService {
       .where('v.createdAt >= :from AND v.createdAt <= :to', { from, to })
       .groupBy('date')
       .getRawMany();
+    const retention = fillMissingDates(from, to, raw);
 
     const used: UsedInterface = await this.viewRepository
       .createQueryBuilder('v')
@@ -345,7 +349,7 @@ export class DashboardService {
     return {
       status: HttpStatus.OK,
       data: {
-        retention: raw.map((item) => ({
+        retention: retention.map((item) => ({
           date:
             option === QueryOption.DAY
               ? new Date(item.date).toISOString()
