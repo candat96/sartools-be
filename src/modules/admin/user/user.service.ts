@@ -230,4 +230,24 @@ export class UserService {
       code: ApiCode.SUCCESS,
     };
   }
+
+  async resetPassword(id: number, password: string) {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);
+    }
+
+    const salt: string = v4();
+    const encryptedPassword: string = await hash(password, salt);
+
+    await this.userRepository.update(id, { salt, password: encryptedPassword });
+
+    return {
+      status: HttpStatus.OK,
+      data: null,
+      pagination: null,
+      message: 'Success',
+      code: ApiCode.SUCCESS,
+    };
+  }
 }
