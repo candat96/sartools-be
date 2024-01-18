@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN yarn
+RUN npm
 
 COPY . /app/
 
-RUN yarn run build
+RUN npm run build
 
 FROM node:16-alpine as deploy
 
