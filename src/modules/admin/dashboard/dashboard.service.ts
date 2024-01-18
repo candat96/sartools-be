@@ -27,7 +27,11 @@ import {
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
 import { QueryOption } from '../../../common/constants/enum';
-import { fillMissingDates, fillMissingDatesStatic, getYear } from '../../../common/utils/utils';
+import {
+  fillMissingDates,
+  fillMissingDatesStatic,
+  getYear,
+} from '../../../common/utils/utils';
 import { Location, User, View } from '../../database/model/entities';
 
 @Injectable()
@@ -93,7 +97,7 @@ export class DashboardService {
         to,
       })
       .getRawOne();
-    
+
     return {
       status: HttpStatus.OK,
       data: {

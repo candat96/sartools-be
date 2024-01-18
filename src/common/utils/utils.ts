@@ -1,7 +1,10 @@
 import * as bcrypt from 'bcrypt';
 import * as moment from 'moment-timezone';
 import { Config } from '../../config/config';
-import { StaticResponse, UsedByDayRawInterface } from '../../modules/admin/dashboard/dto/response';
+import {
+  StaticResponse,
+  UsedByDayRawInterface,
+} from '../../modules/admin/dashboard/dto/response';
 import { FRANCE_TIME_ZONE } from '../constants/timezone';
 
 export const hash = async (

@@ -21,6 +21,7 @@ import {
   CreateUserRequest,
   DeleteUserRequest,
   GetUserRequest,
+  ResetPasswordRequest,
   UpdateUserRequest,
 } from './dto/request';
 import {
@@ -119,6 +120,28 @@ export class UserController {
   ): Promise<ApiResponse<UpdateUserResponse>> {
     try {
       return await this.userService.deleteUser(id.map((item) => Number(item)));
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Put('password/reset/:id')
+  @ApiOperation({
+    summary: 'Update user',
+    description: 'Update user',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async resetPassword(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() { password }: ResetPasswordRequest,
+  ) {
+    try {
+      return await this.userService.resetPassword(id, password);
     } catch (err) {
       console.log(err);
       throw err;

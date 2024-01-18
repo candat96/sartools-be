@@ -136,3 +136,11 @@ export class DeleteUserRequest {
   @IsNumber({}, { each: true })
   id: number[];
 }
+
+export class ResetPasswordRequest {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsString()
+  @Matches(REGEX.PASSWORD)
+  password: string;
+}
