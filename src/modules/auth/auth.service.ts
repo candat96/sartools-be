@@ -89,7 +89,7 @@ export class AuthService {
     const startDate = moment().tz(FRANCE_TIME_ZONE).toDate();
     const endDate = moment(startDate)
       .tz(FRANCE_TIME_ZONE)
-      .add(2, 'days')
+      .add(1, 'month')
       .toDate();
     const data = await this.userRepository.save(
       this.userRepository.create({
