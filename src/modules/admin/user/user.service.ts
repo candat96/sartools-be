@@ -51,7 +51,7 @@ export class UserService {
 
     const salt: string = v4();
     const encryptedPassword: string = await hash(dto.password, salt);
-    const startDate = moment().tz(FRANCE_TIME_ZONE).toDate();
+    const startDate = dto.startDate || moment().tz(FRANCE_TIME_ZONE).toDate();
     const endDate = moment(startDate)
       .tz(FRANCE_TIME_ZONE)
       .add(1, 'month')
