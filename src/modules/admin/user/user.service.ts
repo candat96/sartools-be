@@ -218,7 +218,7 @@ export class UserService {
       pagination: {
         total,
         page,
-        size: getAll ? null : size,
+        size: getAll ? total : size,
       },
       message: null,
       code: ApiCode.SUCCESS,
