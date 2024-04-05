@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
+  IsBoolean,
   IsDateString,
   IsEnum,
   IsNotEmpty,
@@ -129,6 +130,11 @@ export class GetUserRequest {
   @IsOptional()
   @IsEnum(SortOption)
   sortOption: SortOption;
+
+  @ApiProperty({ required: false, type: Boolean, default: false })
+  @IsOptional()
+  @IsBoolean()
+  getAll: boolean;
 }
 
 export class DeleteUserRequest {

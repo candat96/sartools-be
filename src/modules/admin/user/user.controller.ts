@@ -128,12 +128,9 @@ export class UserController {
 
   @Put('password/reset/:id')
   @ApiOperation({
-    summary: 'Update user',
-    description: 'Update user',
+    summary: 'Reset password',
+    description: 'Reset password',
   })
-  @Roles([Role.ADMIN])
-  @UseGuards(AuthGuard, RolesGuard)
-  @ApiBearerAuth()
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
   async resetPassword(
