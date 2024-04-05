@@ -167,41 +167,45 @@ export class UserService {
         break;
     }
 
-    const users = await this.userRepository.find(getAll ? {
-      where: search
-        ? [
-            {
-              name: ILike(`%${search}%`),
-              role: Role.USER,
-              isDeleted: false,
-            },
-            {
-              email: ILike(`%${search}%`),
-              role: Role.USER,
-              isDeleted: false,
-            },
-          ]
-        : { role: Role.USER, isDeleted: false },
-      order
-    } : {
-      where: search
-        ? [
-            {
-              name: ILike(`%${search}%`),
-              role: Role.USER,
-              isDeleted: false,
-            },
-            {
-              email: ILike(`%${search}%`),
-              role: Role.USER,
-              isDeleted: false,
-            },
-          ]
-        : { role: Role.USER, isDeleted: false },
-      order,
-      take: size,
-      skip: (page - 1) * size,
-    });
+    const users = await this.userRepository.find(
+      getAll
+        ? {
+            where: search
+              ? [
+                  {
+                    name: ILike(`%${search}%`),
+                    role: Role.USER,
+                    isDeleted: false,
+                  },
+                  {
+                    email: ILike(`%${search}%`),
+                    role: Role.USER,
+                    isDeleted: false,
+                  },
+                ]
+              : { role: Role.USER, isDeleted: false },
+            order,
+          }
+        : {
+            where: search
+              ? [
+                  {
+                    name: ILike(`%${search}%`),
+                    role: Role.USER,
+                    isDeleted: false,
+                  },
+                  {
+                    email: ILike(`%${search}%`),
+                    role: Role.USER,
+                    isDeleted: false,
+                  },
+                ]
+              : { role: Role.USER, isDeleted: false },
+            order,
+            take: size,
+            skip: (page - 1) * size,
+          },
+    );
 
     const total = await this.userRepository.count({
       where: { role: Role.USER, isDeleted: false },
@@ -247,7 +251,10 @@ export class UserService {
     };
   }
 
-  async resetPassword(id: number, password: string): Promise<ApiResponse<null>> {
+  async resetPassword(
+    id: number,
+    password: string,
+  ): Promise<ApiResponse<null>> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
       throw new ApiException(HttpStatus.BAD_REQUEST, ErrorCode.USER_NOT_FOUND);

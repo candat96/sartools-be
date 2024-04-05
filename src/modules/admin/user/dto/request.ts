@@ -131,7 +131,7 @@ export class GetUserRequest {
   @IsEnum(SortOption)
   sortOption: SortOption;
 
-  @ApiProperty({ required: false, type: Boolean, default: false})
+  @ApiProperty({ required: false, type: Boolean, default: false })
   @IsOptional()
   @IsBoolean()
   getAll: boolean;

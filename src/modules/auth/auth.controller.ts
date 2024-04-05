@@ -23,7 +23,6 @@ import { LoginResponse, RegisterResponse } from './dto/response';
 import { ApiResponse } from '../../common/classes/api-response';
 import { AuthDecorator } from '../../common/decorator/auth.decorator';
 import { AuthGuard } from '../../common/guards/auth.guard';
-import { ResetPasswordRequest } from '../admin/user/dto/request';
 
 @ApiTags('Authentication')
 @Controller('auth')

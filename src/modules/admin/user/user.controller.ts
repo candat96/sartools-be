@@ -131,9 +131,6 @@ export class UserController {
     summary: 'Reset password',
     description: 'Reset password',
   })
-  @Roles([Role.ADMIN])
-  @UseGuards(AuthGuard, RolesGuard)
-  @ApiBearerAuth()
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
   async resetPassword(

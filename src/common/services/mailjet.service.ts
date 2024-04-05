@@ -1,14 +1,14 @@
-import { HttpStatus, Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { Client } from 'node-mailjet';
-import { Config } from "../../config/config";
-import { ApiException } from "../exception/api-exception";
-import { ErrorCode } from "../constants/error";
-import { MailjetSendEmailRequest } from "./dto/request.dto";
-import { Constant } from "../constants/constant";
+import { MailjetSendEmailRequest } from './dto/request.dto';
+import { Config } from '../../config/config';
+import { Constant } from '../constants/constant';
+import { ErrorCode } from '../constants/error';
+import { ApiException } from '../exception/api-exception';
 
 const mailjetClient = Client.apiConnect(
   Config.MAILJET_PUBLIC_KEY,
-  Config.MAILJET_PRIVATE_KEY
+  Config.MAILJET_PRIVATE_KEY,
 );
 
 @Injectable()
@@ -55,25 +55,33 @@ export class MailjetService {
 
   async sendEmail(data: MailjetSendEmailRequest) {
     try {
-      const req = await mailjetClient.post('send', { version: 'v3.1' }).request({ 
-        "Messages":[
-          {
-            "From": {
-                "Email": data.fromEmail,
-                "Name": data.fromName
-            },
-            "To": [
+      const req = await mailjetClient
+        .post('send', { version: 'v3.1' })
+        .request({
+          Messages: [
+            {
+              From: {
+                Email: data.fromEmail,
+                Name: data.fromName,
+              },
+              To: [
                 {
-                    "Email": data.toEmail,
-                    "Name": data.toName
-                }
-            ],
-            "Subject": Constant.EMAIL_SUBJECT,
-            "TextPart": this.buildResetPasswordEmailContent(data.toName, data.link),
-            "HTMLPart": this.buildResetPasswordEmailHtmlTemplate(data.toName, data.link)
-          }
-        ]
-      });
+                  Email: data.toEmail,
+                  Name: data.toName,
+                },
+              ],
+              Subject: Constant.EMAIL_SUBJECT,
+              TextPart: this.buildResetPasswordEmailContent(
+                data.toName,
+                data.link,
+              ),
+              HTMLPart: this.buildResetPasswordEmailHtmlTemplate(
+                data.toName,
+                data.link,
+              ),
+            },
+          ],
+        });
 
       return req.body;
     } catch (err) {

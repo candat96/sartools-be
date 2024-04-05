@@ -9,7 +9,6 @@ import {
 import { REGEX } from '../../../common/constants/regex';
 import { Position } from '../../database/model/entities';
 
-
 export class SendResetPasswordEmailRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
