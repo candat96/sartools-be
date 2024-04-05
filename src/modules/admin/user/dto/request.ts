@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
-  IsBoolean,
   IsDateString,
   IsEnum,
   IsNotEmpty,
@@ -12,6 +11,7 @@ import {
 } from 'class-validator';
 import { SortOption, SortUserOptions } from '../../../../common/constants/enum';
 import { REGEX } from '../../../../common/constants/regex';
+import { toBoolean } from '../../../../common/utils/utils';
 import { Position, UserStatus } from '../../../database/model/entities';
 
 export class CreateUserRequest {
@@ -131,9 +131,9 @@ export class GetUserRequest {
   @IsEnum(SortOption)
   sortOption: SortOption;
 
-  @ApiProperty({ required: false, type: Boolean, default: false })
+  @ApiProperty({ required: false, type: Boolean })
   @IsOptional()
-  @IsBoolean()
+  @Transform(({ value }) => toBoolean(value))
   getAll: boolean;
 }
 

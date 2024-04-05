@@ -25,6 +25,11 @@ export const compare = async (
   );
 };
 
+export const toBoolean = (value: boolean) => {
+  if (!value) return false;
+  return value.toString() === 'true' ? true : false;
+};
+
 export const fillMissingDates = (
   startDate: Date,
   endDate: Date,
