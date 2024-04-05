@@ -5,6 +5,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { Config } from '../../config/config';
 import { User } from '../database/model/entities';
+import { MailjetService } from '../../common/services/mailjet.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { User } from '../database/model/entities';
     JwtModule.register({ secret: Config.JWT_SECRET }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, MailjetService],
 })
 export class AuthModule {}

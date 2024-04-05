@@ -41,8 +41,9 @@ async function bootstrap() {
   });
 
   const logger = new LoggerService();
-  await app.listen(process.env.PORT || 8083, () => {
-    logger.info('Nest application is running on port 8083');
+  const port = process.env.PORT || 8086;
+  await app.listen(port, () => {
+    logger.info(`Nest application is running on port ${port}`);
   });
 }
 bootstrap();

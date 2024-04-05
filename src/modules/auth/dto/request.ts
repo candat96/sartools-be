@@ -9,13 +9,16 @@ import {
 import { REGEX } from '../../../common/constants/regex';
 import { Position } from '../../database/model/entities';
 
-export class LoginRequest {
+
+export class SendResetPasswordEmailRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
   @Matches(REGEX.EMAIL)
   email: string;
+}
 
+export class LoginRequest extends SendResetPasswordEmailRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
@@ -23,19 +26,7 @@ export class LoginRequest {
   password: string;
 }
 
-export class RegisterRequest {
-  @ApiProperty({ required: true })
-  @IsNotEmpty()
-  @IsString()
-  @Matches(REGEX.EMAIL)
-  email: string;
-
-  @ApiProperty({ required: true })
-  @IsNotEmpty()
-  @IsString()
-  @Matches(REGEX.PASSWORD)
-  password: string;
-
+export class RegisterRequest extends LoginRequest {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()

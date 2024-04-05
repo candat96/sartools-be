@@ -19,6 +19,8 @@ import { ApiException } from '../../common/exception/api-exception';
 import { compare, hash } from '../../common/utils/utils';
 import { Config } from '../../config/config';
 import { Role, User, UserStatus } from '../database/model/entities';
+import { MailjetService } from '../../common/services/mailjet.service';
+import { Constant } from '../../common/constants/constant';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +28,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly mailjetService: MailjetService
   ) {}
 
   async login(dto: LoginRequest): Promise<ApiResponse<LoginResponse>> {
@@ -114,7 +117,7 @@ export class AuthService {
   async changePassword(
     userId: number,
     dto: ChangePasswordRequest,
-  ): Promise<ApiResponse<any>> {
+  ): Promise<ApiResponse<null>> {
     const user = await this.userRepository.findOneBy({
       id: userId,
       role: Role.USER,
@@ -137,6 +140,42 @@ export class AuthService {
       ...user,
       salt: newSalt,
       password: encryptedPassword,
+    });
+
+    return {
+      status: HttpStatus.OK,
+      data: null,
+      pagination: null,
+      message: 'Success',
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  buildResetPasswordLink(token: string): string {
+    return `${Config.SARTOOLS_WEB_DOMAIN}/reset-password?token=${token}`;
+  }
+
+  async sendResetPasswordEmail(email: string): Promise<ApiResponse<null>> {
+    const user = await this.userRepository.findOneBy({
+      email,
+      role: Role.USER,
+      isDeleted: false
+    });
+    if (!user) {
+      throw new ApiException(
+        HttpStatus.BAD_REQUEST,
+        ErrorCode.USER_NOT_FOUND,
+      );
+    }
+
+    const token = btoa(user.id.toString() + Config.JWT_SECRET_KEY);
+
+    await this.mailjetService.sendEmail({
+      fromEmail: Constant.SARTOOLS_EMAIL,
+      fromName: Constant.SARTOOLS_NAME,
+      toEmail: email,
+      toName: user.name,
+      link: this.buildResetPasswordLink(token)
     });
 
     return {
