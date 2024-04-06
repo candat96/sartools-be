@@ -7,10 +7,8 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  Matches,
 } from 'class-validator';
 import { SortOption, SortUserOptions } from '../../../../common/constants/enum';
-import { REGEX } from '../../../../common/constants/regex';
 import { toBoolean } from '../../../../common/utils/utils';
 import { Position, UserStatus } from '../../../database/model/entities';
 
@@ -18,13 +16,11 @@ export class CreateUserRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
-  @Matches(REGEX.EMAIL)
   email: string;
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
-  @Matches(REGEX.PASSWORD)
   password: string;
 
   @ApiProperty({ required: false })
@@ -147,6 +143,5 @@ export class ResetPasswordRequest {
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
-  @Matches(REGEX.PASSWORD)
   password: string;
 }
