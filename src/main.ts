@@ -1,11 +1,10 @@
-import { VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
+import { Logger, VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as moment from 'moment-timezone';
 import { AppModule } from './app.module';
 import { FRANCE_TIME_ZONE } from './common/constants/timezone';
 import { CustomValidationPipe } from './common/exception/validation.pipe';
-import { LoggerService } from './common/services/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -40,10 +39,10 @@ async function bootstrap() {
     },
   });
 
-  const logger = new LoggerService();
+  const logger = new Logger('Sartools');
   const port = process.env.PORT || 8083;
   await app.listen(port, () => {
-    logger.info(`Nest application is running on port ${port}`);
+    logger.log(`Nest application is running on port ${port}`);
   });
 }
 bootstrap();

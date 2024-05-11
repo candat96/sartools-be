@@ -5,11 +5,11 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { MailjetService } from '../../common/services/mailjet.service';
 import { Config } from '../../config/config';
-import { User } from '../database/model/entities';
+import { EnableAuth, User } from '../database/model/entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, EnableAuth]),
     JwtModule.register({ secret: Config.JWT_SECRET }),
   ],
   controllers: [AuthController],

@@ -4,7 +4,7 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
-  UseGuards,
+  UseGuards, Get, Put,
 } from '@nestjs/common';
 import {
   ApiOkResponse,
@@ -14,7 +14,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import {
-  ChangePasswordRequest,
+  ChangePasswordRequest, ConfigEnableAuthRequest,
   LoginRequest,
   RegisterRequest,
   SendResetPasswordEmailRequest,
@@ -96,6 +96,38 @@ export class AuthController {
   ): Promise<ApiResponse<any>> {
     try {
       return await this.authService.sendResetPasswordEmail(email);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('enable')
+  @ApiOperation({
+    summary: 'Get enable auth config',
+    description: 'Get enable auth config',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async getEnableAuthConfig(): Promise<ApiResponse<boolean>> {
+    try {
+      return await this.authService.getEnableAuth();
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Put('enable')
+  @ApiOperation({
+    summary: 'Update enable auth config',
+    description: 'Update enable auth config',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async updateEnableAuthConfig(@Body() body: ConfigEnableAuthRequest): Promise<ApiResponse<boolean>> {
+    try {
+      return await this.authService.configEnableAuth(body);
     } catch (err) {
       console.log(err);
       throw err;

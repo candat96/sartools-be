@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -6,7 +6,6 @@ import * as childProcess from 'child_process';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoggerService } from './common/services/logger.service';
 import { Config } from './config/config';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -16,7 +15,6 @@ import { ModuleModule } from './modules/module/module.module';
 import { TelegramBotModule } from './modules/telegram-bot/telegram-bot.module';
 import { UserModule } from './modules/user/user.module';
 
-const logger = new LoggerService();
 @Module({
   imports: [
     TypeOrmModule.forFeature([Modules]),
@@ -43,11 +41,13 @@ const logger = new LoggerService();
   providers: [AppService],
 })
 export class AppModule implements OnModuleInit {
+  private logger = new Logger(AppModule.name);
+
   async onModuleInit() {
-    logger.info('App is starting...');
+    this.logger.log('App is starting...');
     const command = 'yarn run seed:run';
     childProcess.execSync(command, { stdio: 'inherit' });
 
-    logger.info('Seed command executed');
+    this.logger.log('Seed command executed');
   }
 }

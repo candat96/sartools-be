@@ -3,10 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import {
-  ChangePasswordRequest,
+  ChangePasswordRequest, ConfigEnableAuthRequest,
   LoginRequest,
   RegisterRequest,
 } from './dto/request';
@@ -20,13 +20,15 @@ import { ApiException } from '../../common/exception/api-exception';
 import { MailjetService } from '../../common/services/mailjet.service';
 import { compare, hash } from '../../common/utils/utils';
 import { Config } from '../../config/config';
-import { Role, User, UserStatus } from '../database/model/entities';
+import { EnableAuth, Role, User, UserStatus } from '../database/model/entities';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(EnableAuth)
+    private readonly enableAuthRepository: Repository<EnableAuth>,
     private readonly jwtService: JwtService,
     private readonly mailjetService: MailjetService,
   ) {}
@@ -178,6 +180,57 @@ export class AuthService {
     return {
       status: HttpStatus.OK,
       data: null,
+      pagination: null,
+      message: 'Success',
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async configEnableAuth(dto: ConfigEnableAuthRequest) {
+    const { isEnable } = dto;
+
+    const existed = await this.enableAuthRepository.findOneBy({ deletedAt: IsNull() });
+    if (!existed) {
+      const newRecord = await this.enableAuthRepository.save(this.enableAuthRepository.create({ isEnable: true }));
+
+      return {
+        status: HttpStatus.OK,
+        data: newRecord.isEnable,
+        pagination: null,
+        message: 'Success',
+        code: ApiCode.SUCCESS,
+      };
+    }
+
+    existed.isEnable = isEnable;
+    const updated = await this.enableAuthRepository.save(existed)
+
+    return {
+      status: HttpStatus.OK,
+      data: updated.isEnable,
+      pagination: null,
+      message: 'Success',
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async getEnableAuth() {
+    const enableAuth = await this.enableAuthRepository.findOneBy({ deletedAt: IsNull() });
+    if (!enableAuth) {
+      const newRecord = await this.enableAuthRepository.save(this.enableAuthRepository.create({ isEnable: true }));
+
+      return {
+        status: HttpStatus.OK,
+        data: newRecord.isEnable,
+        pagination: null,
+        message: 'Success',
+        code: ApiCode.SUCCESS,
+      };
+    }
+
+    return {
+      status: HttpStatus.OK,
+      data: enableAuth.isEnable,
       pagination: null,
       message: 'Success',
       code: ApiCode.SUCCESS,

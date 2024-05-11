@@ -36,3 +36,4 @@ export * from './p-sat.entity';
 export * from './modules.entity';
 export * from './view.entity';
 export * from './location.entity';
+export * from './enable-auth.entity';
