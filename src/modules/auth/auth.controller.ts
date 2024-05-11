@@ -4,7 +4,9 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
-  UseGuards, Get, Put,
+  UseGuards,
+  Get,
+  Put,
 } from '@nestjs/common';
 import {
   ApiOkResponse,
@@ -14,7 +16,8 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import {
-  ChangePasswordRequest, ConfigEnableAuthRequest,
+  ChangePasswordRequest,
+  ConfigEnableAuthRequest,
   LoginRequest,
   RegisterRequest,
   SendResetPasswordEmailRequest,
@@ -125,7 +128,9 @@ export class AuthController {
   })
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
-  async updateEnableAuthConfig(@Body() body: ConfigEnableAuthRequest): Promise<ApiResponse<boolean>> {
+  async updateEnableAuthConfig(
+    @Body() body: ConfigEnableAuthRequest,
+  ): Promise<ApiResponse<boolean>> {
     try {
       return await this.authService.configEnableAuth(body);
     } catch (err) {

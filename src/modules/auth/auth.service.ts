@@ -6,7 +6,8 @@ import * as moment from 'moment-timezone';
 import { IsNull, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import {
-  ChangePasswordRequest, ConfigEnableAuthRequest,
+  ChangePasswordRequest,
+  ConfigEnableAuthRequest,
   LoginRequest,
   RegisterRequest,
 } from './dto/request';
@@ -189,9 +190,13 @@ export class AuthService {
   async configEnableAuth(dto: ConfigEnableAuthRequest) {
     const { isEnable } = dto;
 
-    const existed = await this.enableAuthRepository.findOneBy({ deletedAt: IsNull() });
+    const existed = await this.enableAuthRepository.findOneBy({
+      deletedAt: IsNull(),
+    });
     if (!existed) {
-      const newRecord = await this.enableAuthRepository.save(this.enableAuthRepository.create({ isEnable: true }));
+      const newRecord = await this.enableAuthRepository.save(
+        this.enableAuthRepository.create({ isEnable: true }),
+      );
 
       return {
         status: HttpStatus.OK,
@@ -203,7 +208,7 @@ export class AuthService {
     }
 
     existed.isEnable = isEnable;
-    const updated = await this.enableAuthRepository.save(existed)
+    const updated = await this.enableAuthRepository.save(existed);
 
     return {
       status: HttpStatus.OK,
@@ -215,9 +220,13 @@ export class AuthService {
   }
 
   async getEnableAuth() {
-    const enableAuth = await this.enableAuthRepository.findOneBy({ deletedAt: IsNull() });
+    const enableAuth = await this.enableAuthRepository.findOneBy({
+      deletedAt: IsNull(),
+    });
     if (!enableAuth) {
-      const newRecord = await this.enableAuthRepository.save(this.enableAuthRepository.create({ isEnable: true }));
+      const newRecord = await this.enableAuthRepository.save(
+        this.enableAuthRepository.create({ isEnable: true }),
+      );
 
       return {
         status: HttpStatus.OK,

@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsDefined,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Position } from '../../database/model/entities';
 
 export class SendResetPasswordEmailRequest {
