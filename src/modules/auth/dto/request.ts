@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsDefined,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Position } from '../../database/model/entities';
 
 export class SendResetPasswordEmailRequest {
@@ -48,4 +54,11 @@ export class ChangePasswordRequest {
   @IsNotEmpty()
   @IsString()
   newPassword: string;
+}
+
+export class ConfigEnableAuthRequest {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsDefined()
+  isEnable: boolean;
 }
