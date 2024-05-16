@@ -40,7 +40,7 @@ export class MailjetService {
       Vous avez demandé une réinitialisation de votre mot de passe pour accéder à SarTools. Pour procéder à cette réinitialisation, veuillez suivre les étapes ci-dessous :<br />
 
       1. Cliquez sur le lien suivant pour accéder à la page de réinitialisation de mot de passe :<br />
-      <a href=${link}>${link}</a><br />
+      <a href=${link} target='_blank'>${link}</a><br />
 
       2. Une fois sur la page, suivez les instructions pour choisir un nouveau mot de passe sécurisé.<br />
 
