@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Position } from '../../database/model/entities';
+import { Platform, Position } from '../../database/model/entities';
 
 export class SendResetPasswordEmailRequest {
   @ApiProperty({ required: true })
@@ -20,6 +20,11 @@ export class LoginRequest extends SendResetPasswordEmailRequest {
   @IsNotEmpty()
   @IsString()
   password: string;
+
+  @ApiProperty({ required: false, enum: Platform })
+  @IsOptional()
+  @IsEnum(Platform)
+  platform: Platform;
 }
 
 export class RegisterRequest extends LoginRequest {

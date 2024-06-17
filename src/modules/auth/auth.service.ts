@@ -1,3 +1,4 @@
+import { Config } from '../../config/config';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,7 +21,6 @@ import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
 import { ApiException } from '../../common/exception/api-exception';
 import { MailjetService } from '../../common/services/mailjet.service';
 import { compare, hash } from '../../common/utils/utils';
-import { Config } from '../../config/config';
 import { EnableAuth, Role, User, UserStatus } from '../database/model/entities';
 
 @Injectable()
@@ -61,6 +61,11 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
         ErrorCode.INVALID_PASSWORD,
       );
+    }
+
+    if (dto.platform) {
+      user.platform = dto.platform;
+      await this.userRepository.save(user);
     }
 
     const info = _.omit(user, ['salt', 'password']);
