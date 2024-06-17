@@ -12,6 +12,11 @@ export enum Role {
   ADMIN = 'ADMIN',
 }
 
+export enum Platform {
+  ANDROID = 'ANDROID',
+  IOS = 'IOS',
+}
+
 export enum Position {
   DEFAULT = 'DEFAULT',
   DIRECTION = 'DIRECTION',
@@ -74,6 +79,9 @@ export class User extends BaseEntity {
 
   @Column({ nullable: false, type: 'enum', enum: Role, default: Role.USER })
   role: Role;
+
+  @Column({ nullable: true, type: 'enum', enum: Platform })
+  platform: Platform;
 
   @Column({ nullable: false, default: false })
   isDeleted: boolean;
