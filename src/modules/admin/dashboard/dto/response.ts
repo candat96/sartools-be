@@ -1,3 +1,5 @@
+import { Platform } from '../../../database/model/entities';
+
 export class StaticResponse {
   date: string;
   total: number;
@@ -83,4 +85,9 @@ export class RegionResponse {
   countryId: string;
   countryName: string;
   total: number;
+}
+
+export class PlatformResponse {
+  platform: Platform;
+  count: number;
 }

@@ -24,6 +24,7 @@ import {
 import {
   BounceResponse,
   ModuleViewResponse,
+  PlatformResponse,
   RegionResponse,
   RetentionResponse,
   UserStaticResponse,
@@ -160,6 +161,25 @@ export class DashboardController {
   ): Promise<ApiResponse<RegionResponse[]>> {
     try {
       return await this.dashboardService.region(query);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  @Get('platform')
+  @ApiOperation({
+    summary: 'Platform',
+    description: 'Platform',
+  })
+  @Roles([Role.ADMIN])
+  @UseGuards(AuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOkResponse()
+  async platform(): Promise<ApiResponse<PlatformResponse[]>> {
+    try {
+      return await this.dashboardService.platform();
     } catch (err) {
       console.log(err);
       throw err;
