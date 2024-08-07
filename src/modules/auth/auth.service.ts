@@ -1,4 +1,11 @@
-import { Config } from '../../config/config';
+import { ApiResponse } from '@common/classes/api-response';
+import { ApiCode } from '@common/constants/api-code';
+import { Constant } from '@common/constants/constant';
+import { ErrorCode } from '@common/constants/error';
+import { FRANCE_TIME_ZONE } from '@common/constants/timezone';
+import { ApiException } from '@common/exception/api-exception';
+import { MailjetService } from '@common/services/mailjet.service';
+import { compare, hash } from '@common/utils/utils';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,14 +20,7 @@ import {
   RegisterRequest,
 } from './dto/request';
 import { LoginResponse, RegisterResponse } from './dto/response';
-import { ApiResponse } from '../../common/classes/api-response';
-import { ApiCode } from '../../common/constants/api-code';
-import { Constant } from '../../common/constants/constant';
-import { ErrorCode } from '../../common/constants/error';
-import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
-import { ApiException } from '../../common/exception/api-exception';
-import { MailjetService } from '../../common/services/mailjet.service';
-import { compare, hash } from '../../common/utils/utils';
+import { Config } from '../../config/config';
 import { EnableAuth, Role, User, UserStatus } from '../database/model/entities';
 
 @Injectable()

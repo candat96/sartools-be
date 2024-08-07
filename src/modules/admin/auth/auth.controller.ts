@@ -1,3 +1,4 @@
+import { ApiResponse } from '@common/classes/api-response';
 import {
   Body,
   Controller,
@@ -9,7 +10,6 @@ import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginRequest } from './dto/request';
 import { LoginResponse } from './dto/response';
-import { ApiResponse } from '../../../common/classes/api-response';
 
 @ApiTags('Admin - Authentication')
 @Controller('admin/auth')

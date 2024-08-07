@@ -1,9 +1,9 @@
+import { Config } from '@config/config';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConstantController } from './constant.controller';
 import { ConstantService } from './constant.service';
-import { Config } from '../../../config/config';
 import {
   Axe,
   Compatibilitees,

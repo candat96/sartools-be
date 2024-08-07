@@ -1,3 +1,6 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { AuthDecorator } from '@common/decorator/auth.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
 import {
   Body,
   Controller,
@@ -15,9 +18,6 @@ import {
 } from '@nestjs/swagger';
 import { ViewModuleRequest } from './dto/request';
 import { ModuleService } from './module.service';
-import { ApiResponse } from '../../common/classes/api-response';
-import { AuthDecorator } from '../../common/decorator/auth.decorator';
-import { AuthGuard } from '../../common/guards/auth.guard';
 import { Modules } from '../database/model/entities';
 
 @Controller('module')

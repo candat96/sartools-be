@@ -1,7 +1,7 @@
+import { ApiResponse } from '@common/classes/api-response';
 import { Controller, Get, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
-import { ApiResponse } from './common/classes/api-response';
 
 @Controller()
 @ApiTags('Common')

@@ -1,9 +1,9 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { ApiCode } from '@common/constants/api-code';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, In, Repository } from 'typeorm';
 import { ViewModuleRequest } from './dto/request';
-import { ApiResponse } from '../../common/classes/api-response';
-import { ApiCode } from '../../common/constants/api-code';
 import { Modules, User, View } from '../database/model/entities';
 
 @Injectable()

@@ -1,3 +1,9 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { ApiCode } from '@common/constants/api-code';
+import { ErrorCode } from '@common/constants/error';
+import { ApiException } from '@common/exception/api-exception';
+import { compare } from '@common/utils/utils';
+import { Config } from '@config/config';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -5,12 +11,6 @@ import * as _ from 'lodash';
 import { Repository } from 'typeorm';
 import { LoginRequest } from './dto/request';
 import { LoginResponse } from './dto/response';
-import { ApiResponse } from '../../../common/classes/api-response';
-import { ApiCode } from '../../../common/constants/api-code';
-import { ErrorCode } from '../../../common/constants/error';
-import { ApiException } from '../../../common/exception/api-exception';
-import { compare } from '../../../common/utils/utils';
-import { Config } from '../../../config/config';
 import { Role, User, UserStatus } from '../../database/model/entities';
 
 @Injectable()

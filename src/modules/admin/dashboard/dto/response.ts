@@ -87,7 +87,12 @@ export class RegionResponse {
   total: number;
 }
 
-export class PlatformResponse {
+export class PlatformChartDto {
   platform: Platform;
   count: number;
+}
+
+export class PlatformResponse {
+  chart: PlatformChartDto[];
+  total: number;
 }
