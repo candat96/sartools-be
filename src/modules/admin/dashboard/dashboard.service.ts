@@ -10,19 +10,20 @@ import {
   VisitWithinDayRequest,
 } from './dto/request';
 import {
-  StaticResponse,
-  UserStaticResponse,
-  ViewDataResponse,
-  ModuleViewRawInterface,
-  VisitWithinDayResponse,
-  ModuleViewResponse,
-  TotalModuleInterface,
-  ModuleViewStatisticInterface,
   BounceResponse,
+  ModuleViewRawInterface,
+  ModuleViewResponse,
+  ModuleViewStatisticInterface,
+  PlatformResponse,
+  RegionResponse,
+  RetentionResponse,
+  StaticResponse,
+  TotalModuleInterface,
   UsedByDayRawInterface,
   UsedInterface,
-  RetentionResponse,
-  RegionResponse,
+  UserStaticResponse,
+  ViewDataResponse,
+  VisitWithinDayResponse,
 } from './dto/response';
 import { ApiResponse } from '../../../common/classes/api-response';
 import { ApiCode } from '../../../common/constants/api-code';
@@ -395,6 +396,26 @@ export class DashboardService {
       data: data.map((item) => ({
         ...item,
         total: Number(item.total),
+      })),
+      pagination: null,
+      message: null,
+      code: ApiCode.SUCCESS,
+    };
+  }
+
+  async platform(): Promise<ApiResponse<PlatformResponse[]>> {
+    const data: PlatformResponse[] = await this.userRepository
+      .createQueryBuilder('u')
+      .select('u.platform as platform, COUNT(DISTINCT(u.id)) as count')
+      .where('u.deletedAt IS NULL')
+      .groupBy('u.platform')
+      .getRawMany();
+
+    return {
+      status: HttpStatus.OK,
+      data: data.map((item) => ({
+        platform: item.platform,
+        count: Number(item.count),
       })),
       pagination: null,
       message: null,
