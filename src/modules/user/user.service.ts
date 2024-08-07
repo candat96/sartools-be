@@ -1,3 +1,9 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { ApiCode } from '@common/constants/api-code';
+import { ErrorCode } from '@common/constants/error';
+import { FRANCE_TIME_ZONE } from '@common/constants/timezone';
+import { ApiException } from '@common/exception/api-exception';
+import { MapboxService } from '@common/services/mapbox.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as _ from 'lodash';
@@ -5,12 +11,6 @@ import * as moment from 'moment-timezone';
 import { LessThanOrEqual, Repository } from 'typeorm';
 import { SaveLocationRequest } from './dto/request';
 import { GetUserProfileResponse } from './dto/response';
-import { ApiResponse } from '../../common/classes/api-response';
-import { ApiCode } from '../../common/constants/api-code';
-import { ErrorCode } from '../../common/constants/error';
-import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
-import { ApiException } from '../../common/exception/api-exception';
-import { MapboxService } from '../../common/services/mapbox.service';
 import { Location, User, UserStatus } from '../database/model/entities';
 
 @Injectable()

@@ -1,3 +1,6 @@
+import { Roles } from '@common/decorator/role.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
+import { RolesGuard } from '@common/guards/roles.guard';
 import {
   Body,
   Controller,
@@ -25,9 +28,6 @@ import {
   GetConstantRequest,
   UpdateConstantRequest,
 } from './dto/request';
-import { Roles } from '../../../common/decorator/role.decorator';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Role } from '../../database/model/entities';
 
 @ApiTags('Admin - Constant')

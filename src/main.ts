@@ -1,10 +1,10 @@
+import { FRANCE_TIME_ZONE } from '@common/constants/timezone';
+import { CustomValidationPipe } from '@common/exception/validation.pipe';
 import { Logger, VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as moment from 'moment-timezone';
 import { AppModule } from './app.module';
-import { FRANCE_TIME_ZONE } from './common/constants/timezone';
-import { CustomValidationPipe } from './common/exception/validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

@@ -1,11 +1,11 @@
+import { ApiCode } from '@common/constants/api-code';
+import { Constant } from '@common/constants/enum';
+import { ErrorCode } from '@common/constants/error';
+import { ApiException } from '@common/exception/api-exception';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AddConstantRequest, UpdateConstantRequest } from './dto/request';
-import { ApiCode } from '../../../common/constants/api-code';
-import { Constant } from '../../../common/constants/enum';
-import { ErrorCode } from '../../../common/constants/error';
-import { ApiException } from '../../../common/exception/api-exception';
 import {
   Axe,
   Compatibilitees,

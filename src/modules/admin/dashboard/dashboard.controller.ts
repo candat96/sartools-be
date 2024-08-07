@@ -1,3 +1,7 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { Roles } from '@common/decorator/role.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
+import { RolesGuard } from '@common/guards/roles.guard';
 import {
   Controller,
   Get,
@@ -30,10 +34,6 @@ import {
   UserStaticResponse,
   VisitWithinDayResponse,
 } from './dto/response';
-import { ApiResponse } from '../../../common/classes/api-response';
-import { Roles } from '../../../common/decorator/role.decorator';
-import { AuthGuard } from '../../../common/guards/auth.guard';
-import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Role } from '../../database/model/entities';
 
 @ApiTags('Admin - Dashboard')
@@ -177,7 +177,7 @@ export class DashboardController {
   @ApiBearerAuth()
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiOkResponse()
-  async platform(): Promise<ApiResponse<PlatformResponse[]>> {
+  async platform(): Promise<ApiResponse<PlatformResponse>> {
     try {
       return await this.dashboardService.platform();
     } catch (err) {

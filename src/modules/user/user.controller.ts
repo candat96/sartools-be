@@ -1,3 +1,6 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { AuthDecorator } from '@common/decorator/auth.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
 import {
   Body,
   Controller,
@@ -16,9 +19,6 @@ import {
 import { SaveLocationRequest } from './dto/request';
 import { GetUserProfileResponse } from './dto/response';
 import { UserService } from './user.service';
-import { ApiResponse } from '../../common/classes/api-response';
-import { AuthDecorator } from '../../common/decorator/auth.decorator';
-import { AuthGuard } from '../../common/guards/auth.guard';
 
 @ApiTags('User')
 @Controller('user')

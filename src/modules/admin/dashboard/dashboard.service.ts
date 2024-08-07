@@ -1,3 +1,11 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { ApiCode } from '@common/constants/api-code';
+import { QueryOption } from '@common/constants/enum';
+import {
+  fillMissingDates,
+  fillMissingDatesStatic,
+  getYear,
+} from '@common/utils/utils';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
@@ -14,6 +22,7 @@ import {
   ModuleViewRawInterface,
   ModuleViewResponse,
   ModuleViewStatisticInterface,
+  PlatformChartDto,
   PlatformResponse,
   RegionResponse,
   RetentionResponse,
@@ -25,15 +34,12 @@ import {
   ViewDataResponse,
   VisitWithinDayResponse,
 } from './dto/response';
-import { ApiResponse } from '../../../common/classes/api-response';
-import { ApiCode } from '../../../common/constants/api-code';
-import { QueryOption } from '../../../common/constants/enum';
 import {
-  fillMissingDates,
-  fillMissingDatesStatic,
-  getYear,
-} from '../../../common/utils/utils';
-import { Location, User, View } from '../../database/model/entities';
+  Location,
+  User,
+  UserStatus,
+  View,
+} from '../../database/model/entities';
 
 @Injectable()
 export class DashboardService {
@@ -403,20 +409,30 @@ export class DashboardService {
     };
   }
 
-  async platform(): Promise<ApiResponse<PlatformResponse[]>> {
-    const data: PlatformResponse[] = await this.userRepository
+  async platform(): Promise<ApiResponse<PlatformResponse>> {
+    const data: PlatformChartDto[] = await this.userRepository
       .createQueryBuilder('u')
       .select('u.platform as platform, COUNT(DISTINCT(u.id)) as count')
-      .where('u.deletedAt IS NULL')
+      .where(
+        'u.isDeleted = :isDeleted AND u.status = :status AND u.deletedAt IS NULL',
+        { isDeleted: false, status: UserStatus.ACTIVE },
+      )
       .groupBy('u.platform')
       .getRawMany();
 
+    const total = await this.userRepository.count({
+      where: { isDeleted: false, status: UserStatus.ACTIVE },
+    });
+
     return {
       status: HttpStatus.OK,
-      data: data.map((item) => ({
-        platform: item.platform,
-        count: Number(item.count),
-      })),
+      data: {
+        chart: data.map((item) => ({
+          platform: item.platform,
+          count: Number(item.count),
+        })),
+        total,
+      },
       pagination: null,
       message: null,
       code: ApiCode.SUCCESS,

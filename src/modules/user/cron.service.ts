@@ -1,7 +1,7 @@
+import { FRANCE_TIME_ZONE } from '@common/constants/timezone';
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { UserService } from './user.service';
-import { FRANCE_TIME_ZONE } from '../../common/constants/timezone';
 
 @Injectable()
 export class CronService {

@@ -1,3 +1,6 @@
+import { ApiResponse } from '@common/classes/api-response';
+import { AuthDecorator } from '@common/decorator/auth.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
 import {
   Body,
   Controller,
@@ -23,9 +26,6 @@ import {
   SendResetPasswordEmailRequest,
 } from './dto/request';
 import { LoginResponse, RegisterResponse } from './dto/response';
-import { ApiResponse } from '../../common/classes/api-response';
-import { AuthDecorator } from '../../common/decorator/auth.decorator';
-import { AuthGuard } from '../../common/guards/auth.guard';
 
 @ApiTags('Authentication')
 @Controller('auth')
