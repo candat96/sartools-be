@@ -35,7 +35,8 @@ import {
   VisitWithinDayResponse,
 } from './dto/response';
 import {
-  Location, Platform,
+  Location,
+  Platform,
   User,
   UserStatus,
   View,
