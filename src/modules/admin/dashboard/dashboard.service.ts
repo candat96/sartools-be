@@ -36,6 +36,7 @@ import {
 } from './dto/response';
 import {
   Location,
+  Platform,
   User,
   UserStatus,
   View,
@@ -428,7 +429,7 @@ export class DashboardService {
       status: HttpStatus.OK,
       data: {
         chart: data.map((item) => ({
-          platform: item.platform,
+          platform: item.platform || Platform.OTHER,
           count: Number(item.count),
         })),
         total,

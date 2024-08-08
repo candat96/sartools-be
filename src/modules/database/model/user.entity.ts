@@ -15,6 +15,7 @@ export enum Role {
 export enum Platform {
   ANDROID = 'ANDROID',
   IOS = 'IOS',
+  OTHER = 'OTHER',
 }
 
 export enum Position {
@@ -80,7 +81,12 @@ export class User extends BaseEntity {
   @Column({ nullable: false, type: 'enum', enum: Role, default: Role.USER })
   role: Role;
 
-  @Column({ nullable: true, type: 'enum', enum: Platform })
+  @Column({
+    nullable: true,
+    type: 'enum',
+    enum: Platform,
+    default: Platform.OTHER,
+  })
   platform: Platform;
 
   @Column({ nullable: false, default: false })
