@@ -4,6 +4,7 @@ services:
   backend:
     container_name: sartools-container
     image: candat/sartools-be
+    build: .
     ports:
       - "8083:8083"
     env_file:
@@ -13,14 +14,15 @@ services:
         source: sartools-be-upload
         target: /public/uploads
     networks:
-      - sartools
+      sartools:
+        - ipv4_address: 172.228.104.17
     restart: unless-stopped
    
 
 networks:
   sartools:
-    name: sartools
     driver: bridge
+    external: true
 
 volumes:
   sartools-be-upload:
