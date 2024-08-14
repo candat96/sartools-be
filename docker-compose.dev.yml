@@ -15,7 +15,7 @@ services:
         target: /public/uploads
     networks:
       sartools:
-        - ipv4_address: 172.228.104.17
+        ipv4_address: 172.228.104.17
     restart: unless-stopped
    
 
