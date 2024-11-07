@@ -225,13 +225,7 @@ export class ConstantService {
         break;
     }
 
-    return {
-      status: HttpStatus.OK,
-      data,
-      pagination: null,
-      message: null,
-      code: ApiCode.SUCCESS,
-    };
+    return data;
   }
 
   async addConstant(dto: AddConstantRequest) {

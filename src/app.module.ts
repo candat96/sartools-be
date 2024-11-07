@@ -1,6 +1,7 @@
 import { Config } from '@config/config';
 import { AdminModule } from '@modules/admin/admin.module';
 import { AuthModule } from '@modules/auth/auth.module';
+import { ConstantModule } from '@modules/constant/constant.module';
 import { DatabaseModule } from '@modules/database/database.module';
 import { ModuleModule } from '@modules/module/module.module';
 import { TelegramBotModule } from '@modules/telegram-bot/telegram-bot.module';
@@ -33,6 +34,7 @@ import { Modules } from './modules/database/model/entities';
     DatabaseModule,
     AdminModule,
     AuthModule,
+    ConstantModule,
     UserModule,
     ModuleModule,
     TelegramBotModule,

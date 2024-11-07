@@ -83,5 +83,6 @@ import {
   ],
   controllers: [ConstantController],
   providers: [ConstantService],
+  exports: [ConstantService],
 })
 export class ConstantModule {}
