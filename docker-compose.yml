@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   mysql:
-    image: mysql
+    image: mysql:8.0
     container_name: mysql-sartools
     restart: unless-stopped
     ports:
@@ -17,6 +17,26 @@ services:
       MYSQL_USER: sartools
       MYSQL_PASSWORD: sartools2023
     command: --default-authentication-plugin=mysql_native_password
+
+  backend:
+    container_name: sartools-container
+    image: candat/sartools-be
+    build: .
+    ports:
+      - "8083:8083"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    volumes:
+      - type: volume
+        source: sartools-be-upload
+        target: /public/uploads
+    networks:
+      sartools:
+        ipv4_address: 172.228.104.17
+    restart: unless-stopped
+
 networks:
   sartools:
     name: sartools
@@ -25,3 +45,6 @@ networks:
       config:
         - subnet: 172.228.104.0/24
           gateway: 172.228.104.1
+
+volumes:
+  sartools-be-upload:
