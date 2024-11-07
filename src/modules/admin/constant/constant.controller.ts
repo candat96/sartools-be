@@ -1,3 +1,4 @@
+import { ApiCode } from '@common/constants/api-code';
 import { Roles } from '@common/decorator/role.decorator';
 import { AuthGuard } from '@common/guards/auth.guard';
 import { RolesGuard } from '@common/guards/roles.guard';
@@ -6,6 +7,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -47,7 +49,13 @@ export class ConstantController {
   @ApiOkResponse()
   async getConstant(@Query() { type }: GetConstantRequest) {
     try {
-      return await this.constantService.getConstant(type);
+      return {
+        status: HttpStatus.OK,
+        data: await this.constantService.getConstant(type),
+        pagination: null,
+        message: null,
+        code: ApiCode.SUCCESS,
+      };
     } catch (err) {
       console.log(err);
       throw err;
