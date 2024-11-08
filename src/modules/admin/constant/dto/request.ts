@@ -1,3 +1,4 @@
+import { Constant } from '@common/constants/enum';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
@@ -9,7 +10,6 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { Constant } from '../../../../common/constants/enum';
 
 export class GetConstantRequest {
   @ApiProperty({ required: true, enum: Constant })
@@ -22,14 +22,14 @@ export class _V15DTO {
   @ApiProperty({ required: false })
   @IsNumber()
   @IsOptional()
-  _v15_2: number;
+  _v15: number;
 }
 
 export class _V154DTO {
   @ApiProperty({ required: false })
   @IsNumber()
   @IsOptional()
-  _v15: number;
+  _v15_2: number;
 }
 
 export class AxeDTO {

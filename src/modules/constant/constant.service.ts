@@ -34,62 +34,62 @@ export class ConstantService {
       tableauBilles: await this.adminConstantService.getConstant(
         Constant.TABLEAU_BILLES,
       ),
-      tableauBusesCaracteristiqueRepository:
+      tableauBusesCaracteristique:
         await this.adminConstantService.getConstant(
           Constant.TABLEAU_BUSES_CARACTERISTIQUE,
         ),
-      tableauListeBusesRepository: await this.adminConstantService.getConstant(
+      tableauListeBuses: await this.adminConstantService.getConstant(
         Constant.TABLEAU_LISTE_BUSES,
       ),
-      tableauMarkRepository: await this.adminConstantService.getConstant(
+      tableauMark: await this.adminConstantService.getConstant(
         Constant.TABLEAU_MARK,
       ),
-      tableauMeshRepository: await this.adminConstantService.getConstant(
+      tableauMesh: await this.adminConstantService.getConstant(
         Constant.TABLEAU_MESH,
       ),
-      tableauPRepository: await this.adminConstantService.getConstant(
+      tableauP: await this.adminConstantService.getConstant(
         Constant.TABLEAU_P,
       ),
-      tableauQRepository: await this.adminConstantService.getConstant(
+      tableauQ: await this.adminConstantService.getConstant(
         Constant.TABLEAU_Q,
       ),
-      tableauRRepository: await this.adminConstantService.getConstant(
+      tableauR: await this.adminConstantService.getConstant(
         Constant.TABLEAU_R,
       ),
-      tableauRRRepository: await this.adminConstantService.getConstant(
+      tableauRR: await this.adminConstantService.getConstant(
         Constant.TABLEAU_RR,
       ),
-      tableauRWRepository: await this.adminConstantService.getConstant(
+      tableauRW: await this.adminConstantService.getConstant(
         Constant.TABLEAU_RW,
       ),
-      tableauSRepository: await this.adminConstantService.getConstant(
+      tableauS: await this.adminConstantService.getConstant(
         Constant.TABLEAU_S,
       ),
-      tableauSelectRepository: await this.adminConstantService.getConstant(
+      tableauSelect: await this.adminConstantService.getConstant(
         Constant.TABLEAU_SELECT,
       ),
-      tableau12Repository: await this.adminConstantService.getConstant(
+      tableau12: await this.adminConstantService.getConstant(
         Constant.TABLEAU1_2,
       ),
-      tableau11Repository: await this.adminConstantService.getConstant(
+      tableau11: await this.adminConstantService.getConstant(
         Constant.TABLEAU1_1,
       ),
-      tableau1Repository: await this.adminConstantService.getConstant(
+      tableau1: await this.adminConstantService.getConstant(
         Constant.TABLEAU1,
       ),
-      temporaireRepository: await this.adminConstantService.getConstant(
+      temporaire: await this.adminConstantService.getConstant(
         Constant.TEMPORAIRE,
       ),
-      topoRepository: await this.adminConstantService.getConstant(
+      topo: await this.adminConstantService.getConstant(
         Constant.TOPO,
       ),
-      transversalesRepository: await this.adminConstantService.getConstant(
+      transversales: await this.adminConstantService.getConstant(
         Constant.TRANSVERSALES,
       ),
-      typeVoieRepository: await this.adminConstantService.getConstant(
+      typeVoie: await this.adminConstantService.getConstant(
         Constant.TYPE_VOIE,
       ),
-      voieRepository: await this.adminConstantService.getConstant(
+      voie: await this.adminConstantService.getConstant(
         Constant.VOIE,
       ),
     };
