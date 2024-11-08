@@ -34,10 +34,9 @@ export class ConstantService {
       tableauBilles: await this.adminConstantService.getConstant(
         Constant.TABLEAU_BILLES,
       ),
-      tableauBusesCaracteristique:
-        await this.adminConstantService.getConstant(
-          Constant.TABLEAU_BUSES_CARACTERISTIQUE,
-        ),
+      tableauBusesCaracteristique: await this.adminConstantService.getConstant(
+        Constant.TABLEAU_BUSES_CARACTERISTIQUE,
+      ),
       tableauListeBuses: await this.adminConstantService.getConstant(
         Constant.TABLEAU_LISTE_BUSES,
       ),
@@ -47,24 +46,16 @@ export class ConstantService {
       tableauMesh: await this.adminConstantService.getConstant(
         Constant.TABLEAU_MESH,
       ),
-      tableauP: await this.adminConstantService.getConstant(
-        Constant.TABLEAU_P,
-      ),
-      tableauQ: await this.adminConstantService.getConstant(
-        Constant.TABLEAU_Q,
-      ),
-      tableauR: await this.adminConstantService.getConstant(
-        Constant.TABLEAU_R,
-      ),
+      tableauP: await this.adminConstantService.getConstant(Constant.TABLEAU_P),
+      tableauQ: await this.adminConstantService.getConstant(Constant.TABLEAU_Q),
+      tableauR: await this.adminConstantService.getConstant(Constant.TABLEAU_R),
       tableauRR: await this.adminConstantService.getConstant(
         Constant.TABLEAU_RR,
       ),
       tableauRW: await this.adminConstantService.getConstant(
         Constant.TABLEAU_RW,
       ),
-      tableauS: await this.adminConstantService.getConstant(
-        Constant.TABLEAU_S,
-      ),
+      tableauS: await this.adminConstantService.getConstant(Constant.TABLEAU_S),
       tableauSelect: await this.adminConstantService.getConstant(
         Constant.TABLEAU_SELECT,
       ),
@@ -74,24 +65,16 @@ export class ConstantService {
       tableau11: await this.adminConstantService.getConstant(
         Constant.TABLEAU1_1,
       ),
-      tableau1: await this.adminConstantService.getConstant(
-        Constant.TABLEAU1,
-      ),
+      tableau1: await this.adminConstantService.getConstant(Constant.TABLEAU1),
       temporaire: await this.adminConstantService.getConstant(
         Constant.TEMPORAIRE,
       ),
-      topo: await this.adminConstantService.getConstant(
-        Constant.TOPO,
-      ),
+      topo: await this.adminConstantService.getConstant(Constant.TOPO),
       transversales: await this.adminConstantService.getConstant(
         Constant.TRANSVERSALES,
       ),
-      typeVoie: await this.adminConstantService.getConstant(
-        Constant.TYPE_VOIE,
-      ),
-      voie: await this.adminConstantService.getConstant(
-        Constant.VOIE,
-      ),
+      typeVoie: await this.adminConstantService.getConstant(Constant.TYPE_VOIE),
+      voie: await this.adminConstantService.getConstant(Constant.VOIE),
     };
 
     return data;
